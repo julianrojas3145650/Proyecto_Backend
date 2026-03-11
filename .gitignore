@@ -1,7 +1,28 @@
 # compiled output
 /dist
-/node_modules
 /build
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# NestJS / TypeScript
+*.tsbuildinfo
+
+# database
+/postgres
+
+# dependencies
+/node_modules
+
+# environment variables
+.env
 
 # Logs
 logs
