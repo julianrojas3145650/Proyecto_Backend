@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { FeedingsService } from './feedings.service';
-import { FeedingsController } from './feedings.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { Feeding } from './entities/feeding.entity';
+import { FeedingService } from './feedings.service';
+import { FeedingController } from './feedings.controller';
 
 @Module({
-  controllers: [FeedingsController],
-  providers: [FeedingsService],
+  imports: [TypeOrmModule.forFeature([Feeding])],
+  controllers: [FeedingController],
+  providers: [FeedingService],
 })
-export class FeedingsModule {}
+export class FeedingModule {}

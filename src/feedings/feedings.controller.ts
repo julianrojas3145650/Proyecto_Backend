@@ -1,34 +1,40 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { FeedingsService } from './feedings.service';
+
+import { FeedingService } from './feedings.service';
 import { CreateFeedingDto } from './dto/create-feeding.dto';
 import { UpdateFeedingDto } from './dto/update-feeding.dto';
 
-@Controller('feedings')
-export class FeedingsController {
-  constructor(private readonly feedingsService: FeedingsService) {}
+@Controller('feeding')
+export class FeedingController {
+
+  constructor(private readonly service: FeedingService) {}
 
   @Post()
-  create(@Body() createFeedingDto: CreateFeedingDto) {
-    return this.feedingsService.create(createFeedingDto);
+  create(@Body() dto: CreateFeedingDto) {
+    return this.service.create(dto);
   }
 
   @Get()
   findAll() {
-    return this.feedingsService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.feedingsService.findOne(+id);
+    return this.service.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFeedingDto: UpdateFeedingDto) {
-    return this.feedingsService.update(+id, updateFeedingDto);
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateFeedingDto
+  ) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.feedingsService.remove(+id);
+    return this.service.remove(id);
   }
+
 }
