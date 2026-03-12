@@ -9,6 +9,8 @@ import {
 import { Breed } from '../../breeds/entities/breed.entity';
 import { FlockLocation } from './flock-location.entity';
 import { FlockStatus } from './flock-status.entity';
+import { EggProduction } from '../../egg-inventory/entities/egg-production.entity';
+import { EggInventory } from '../../egg-inventory/entities/egg-inventory.entity';
 
 @Entity('flocks')
 export class Flock {
@@ -40,4 +42,9 @@ export class Flock {
     @OneToMany(() => FlockStatus, status => status.flock)
     statuses: FlockStatus[];
 
+    @OneToMany(() => EggProduction, production => production.flock)
+    eggProductions: EggProduction[];
+
+    @OneToMany(() => EggInventory, inventory => inventory.flock)
+    eggInventories: EggInventory[];
 }

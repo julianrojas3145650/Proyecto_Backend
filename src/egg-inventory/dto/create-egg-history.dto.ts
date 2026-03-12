@@ -1,12 +1,15 @@
 import { IsUUID, IsNumber } from "class-validator";
 
-export class CreateEggProductionDto {
+export class CreateEggHistoryDto {
 
   @IsUUID()
-  flockId: string;
+  inventoryId: string;
 
   @IsUUID()
-  eggTypeId: string;
+  productionId: string;
+
+  @IsUUID()
+  userId: string;
 
   @IsNumber()
   quantity: number;

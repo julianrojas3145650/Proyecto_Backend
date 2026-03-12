@@ -1,6 +1,6 @@
 import { IsUUID, IsNumber } from "class-validator";
 
-export class CreateEggProductionDto {
+export class RegisterEggProductionDto {
 
   @IsUUID()
   flockId: string;
