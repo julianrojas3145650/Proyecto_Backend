@@ -14,6 +14,9 @@ import { EggTypesModule } from './egg-types/egg-types.module';
 import { EggInventoryModule } from './egg-inventory/egg-inventory.module';
 import { FeedingsModule } from './feedings/feedings.module';
 import { ReportsModule } from './reports/reports.module';
+import { SupplyHistoryModule } from './supply-history/supply-history.module';
+import { SupplyActionsModule } from './supply-actions/supply-actions.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -42,7 +45,10 @@ import { ReportsModule } from './reports/reports.module';
     EggTypesModule,
     EggInventoryModule,
     FeedingsModule,
-    ReportsModule
+    ReportsModule,
+    SupplyHistoryModule,
+    SupplyActionsModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
