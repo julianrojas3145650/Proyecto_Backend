@@ -1,26 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { SupplyCategory } from './entities/supply-category.entity';
 import { CreateSupplyCategoryDto } from './dto/create-supply-category.dto';
 import { UpdateSupplyCategoryDto } from './dto/update-supply-category.dto';
 
 @Injectable()
 export class SupplyCategoriesService {
-  create(createSupplyCategoryDto: CreateSupplyCategoryDto) {
-    return 'This action adds a new supplyCategory';
+  constructor(
+    @InjectRepository(SupplyCategory)
+    private readonly supplyCategoryRepository: Repository<SupplyCategory>,
+  ) {}
+
+  async create(dto: CreateSupplyCategoryDto): Promise<SupplyCategory> {
+    const existing = await this.supplyCategoryRepository.findOne({
+      where: { nombre_categoria: dto.nombre_categoria },
+    });
+    if (existing) {
+      throw new ConflictException(
+        `La categoría "${dto.nombre_categoria}" ya existe`,
+      );
+    }
+    const category = this.supplyCategoryRepository.create(dto);
+    return this.supplyCategoryRepository.save(category);
   }
 
-  findAll() {
-    return `This action returns all supplyCategories`;
+  async findAll(): Promise<SupplyCategory[]> {
+    return this.supplyCategoryRepository.find({ relations: ['insumos'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} supplyCategory`;
+  async findOne(id: number): Promise<SupplyCategory> {
+    const category = await this.supplyCategoryRepository.findOne({
+      where: { id_categoria: id },
+      relations: ['insumos'],
+    });
+    if (!category) {
+      throw new NotFoundException(`Categoría con ID ${id} no encontrada`);
+    }
+    return category;
   }
 
-  update(id: number, updateSupplyCategoryDto: UpdateSupplyCategoryDto) {
-    return `This action updates a #${id} supplyCategory`;
+  async update(id: number, dto: UpdateSupplyCategoryDto): Promise<SupplyCategory> {
+    const category = await this.findOne(id);
+    Object.assign(category, dto);
+    return this.supplyCategoryRepository.save(category);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} supplyCategory`;
+  async remove(id: number): Promise<{ message: string }> {
+    const category = await this.findOne(id);
+    await this.supplyCategoryRepository.remove(category);
+    return { message: `Categoría con ID ${id} eliminada correctamente` };
   }
 }

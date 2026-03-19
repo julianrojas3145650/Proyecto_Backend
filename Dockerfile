@@ -13,11 +13,8 @@ RUN npm install
 # 5. Copiamos todo el código de nuestro proyecto
 COPY . .
 
-# 6. Construimos la aplicación (genera la carpeta dist)
-RUN npm run build
-
-# 7. Exponemos el puerto que usa NestJS (por defecto 3000)
+# 6. Exponemos el puerto que usa NestJS (por defecto 3000)
 EXPOSE 3000
 
-# 8. Comando para arrancar la app en modo desarrollo con watch
+# 7. Comando para arrancar la app en modo desarrollo con watch
 CMD ["npm", "run", "start:dev"]

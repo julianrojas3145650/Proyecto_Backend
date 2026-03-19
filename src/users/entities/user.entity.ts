@@ -1,31 +1,39 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { CallUser } from './call-user.entity';
+import { UserRole } from '../../roles/entities/user-role.entity';
 
-@Entity()
+@Entity('usuario')
 export class User {
-    @PrimaryGeneratedColumn('uuid')
-    id: string
+  @PrimaryGeneratedColumn('uuid')
+  id_usuario: string;
 
-    @Column({length: 255})
-    firstName: string
+  @Column({ length: 255 })
+  nombre: string;
 
-    @Column({length: 255})
-    lastName: string
+  @Column({ length: 255 })
+  apellido: string;
 
-    @Column()
-    document: number
+  @Column({ length: 255 })
+  documento: string;
 
-    @CreateDateColumn()
-    createAt: Date
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  fecha_creacion: Date;
 
-    @UpdateDateColumn()
-    lastAccess: Date
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  ultimo_acceso: Date;
 
-    @Column({unique: true})
-    email: string
+  @Column({ length: 255, unique: true })
+  email: string;
 
-    @Column()
-    password: string
+  @Column({ length: 255 })
+  password: string;
 
-    @Column({default: true})
-    isActive: boolean
+  @Column({ default: true })
+  activo: boolean;
+
+  @OneToMany(() => CallUser, (llamar) => llamar.usuario)
+  llamarUsuarios: CallUser[];
+
+  @OneToMany(() => UserRole, (usuarioRol) => usuarioRol.usuario)
+  usuarioRoles: UserRole[];
 }

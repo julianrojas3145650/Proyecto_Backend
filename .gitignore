@@ -17,6 +17,7 @@ Thumbs.db
 
 # database
 /postgres
+db_sistema.sql
 
 # dependencies
 /node_modules
