@@ -3,15 +3,15 @@ import { IsUUID, IsNumber } from "class-validator";
 export class CreateEggHistoryDto {
 
   @IsUUID()
-  inventoryId: string;
+  InventarioId: string;
 
   @IsUUID()
-  productionId: string;
+  ProduccionId: string;
 
   @IsUUID()
-  userId: string;
+  UserioId: string;
 
   @IsNumber()
-  quantity: number;
+  Cantidad: number;
 
 }

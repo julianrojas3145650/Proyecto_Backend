@@ -12,39 +12,39 @@ import { FlockStatus } from './flock-status.entity';
 import { EggProduction } from '../../egg-inventory/entities/egg-production.entity';
 import { EggInventory } from '../../egg-inventory/entities/egg-inventory.entity';
 
-@Entity('flocks')
+@Entity('lotes')
 export class Flock {
 
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    Id: string;
 
     @Column()
-    name: string;
+    Nombre: string;
 
     @Column()
-    totalBirds: number;
+    Total_aves: number;
 
     @Column()
-    observation: string;
+    Observacion: string;
 
     @Column()
-    foodRation: string;
+    Racion_alimento: string;
 
     @Column()
-    status: string;
+    Estado: string;
 
     @ManyToOne(() => Breed)
-    breed: Breed;
+    Raza: Breed;
 
-    @OneToMany(() => FlockLocation, location => location.flock)
-    locations: FlockLocation[];
+    @OneToMany(() => FlockLocation, location => location.Lote)
+    Ubicacion: FlockLocation[];
 
-    @OneToMany(() => FlockStatus, status => status.flock)
-    statuses: FlockStatus[];
+    @OneToMany(() => FlockStatus, status => status.Lote)
+    Estados: FlockStatus[];
 
-    @OneToMany(() => EggProduction, production => production.flock)
-    eggProductions: EggProduction[];
+    @OneToMany(() => EggProduction, production => production.Lote)
+    Produccion_huevo: EggProduction[];
 
-    @OneToMany(() => EggInventory, inventory => inventory.flock)
-    eggInventories: EggInventory[];
+    @OneToMany(() => EggInventory, inventory => inventory.Lote)
+    Inventario_huevo: EggInventory[];
 }

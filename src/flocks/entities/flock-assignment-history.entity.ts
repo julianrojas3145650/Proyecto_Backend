@@ -8,19 +8,19 @@ import {
 import { Flock } from './flock.entity';
 import { Barn } from '../../barns/entities/barn.entity';
 
-@Entity('flock_assignment_history')
+@Entity('Historial_asignacion_lote')
 export class FlockAssignmentHistory {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @Column()
-  assignedQuantity: number;
+  Cantidad_asignada: number;
 
   @ManyToOne(() => Flock)
-  flock: Flock;
+  Lote: Flock;
 
   @ManyToOne(() => Barn)
-  barn: Barn;
+  Galpon: Barn;
 
 }

@@ -8,20 +8,20 @@ import {
 
 import { EggInventory } from './egg-inventory.entity';
 
-@Entity('damaged_eggs')
+@Entity('huevos_dañados')
 export class DamagedEgg {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToOne(() => EggInventory, inventory => inventory.damagedEggs)
-  inventory: EggInventory;
+  Inventario: EggInventory;
 
   @Column()
-  quantity: number;
+  Cantidad: number;
 
   @Column()
-  reason: string;
+  Razon: string;
 
   @CreateDateColumn()
   registeredAt: Date;

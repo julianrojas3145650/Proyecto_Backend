@@ -10,25 +10,25 @@ import {
 import { Flock } from '../../flocks/entities/flock.entity';
 import { EggInventory } from './egg-inventory.entity';
 
-@Entity('egg_production')
+@Entity('Produccion_huevo')
 export class EggProduction {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
-  @ManyToOne(() => Flock, flock => flock.eggProductions)
-  flock: Flock;
-
-  @Column()
-  eggTypeId: string;
+  @ManyToOne(() => Flock, flock => flock.Produccion_huevo)
+  Lote: Flock;
 
   @Column()
-  quantity: number;
+  Tipo_huevoId: string;
+
+  @Column()
+  Cantidady: number;
 
   @CreateDateColumn()
-  productionDate: Date;
+  ProduccionFecha: Date;
 
-  @OneToMany(() => EggInventory, inventory => inventory.production)
+  @OneToMany(() => EggInventory, inventory => inventory.Produccion)
   inventories: EggInventory[];
 
 }

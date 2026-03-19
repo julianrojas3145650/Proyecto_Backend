@@ -4,16 +4,16 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 
-@Entity('reports')
+@Entity('reportes')
 export class Report {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @Column()
-  userId: string;
+  Id_usuario: string;
 
   @Column()
-  reportType: string;
+  Tipo_reporte: string;
 
 }

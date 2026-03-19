@@ -11,28 +11,28 @@ import { EggProduction } from './egg-production.entity';
 import { DamagedEgg } from './damaged-egg.entity';
 import { EggHistory } from './egg-history.entity';
 
-@Entity('egg_inventory')
+@Entity('Inventario_huevo')
 export class EggInventory {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @Column()
-  eggTypeId: string;
+  Tipo_huevoId: string;
 
-  @ManyToOne(() => Flock, flock => flock.eggInventories)
-  flock: Flock;
+  @ManyToOne(() => Flock, flock => flock.Inventario_huevo)
+  Lote: Flock;
 
   @ManyToOne(() => EggProduction, production => production.inventories)
-  production: EggProduction;
+  Produccion: EggProduction;
 
   @Column()
-  quantity: number;
+  Cantidad: number;
 
-  @OneToMany(() => DamagedEgg, damaged => damaged.inventory)
+  @OneToMany(() => DamagedEgg, damaged => damaged.Inventario)
   damagedEggs: DamagedEgg[];
 
-  @OneToMany(() => EggHistory, history => history.inventory)
+  @OneToMany(() => EggHistory, history => history.Inventario)
   history: EggHistory[];
 
 }

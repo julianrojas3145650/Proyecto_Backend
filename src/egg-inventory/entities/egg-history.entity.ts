@@ -9,25 +9,25 @@ import {
 import { EggInventory } from './egg-inventory.entity';
 import { EggProduction } from './egg-production.entity';
 
-@Entity('egg_history')
+@Entity('Historial_Huevo')
 export class EggHistory {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @ManyToOne(() => EggInventory, inventory => inventory.history)
-  inventory: EggInventory;
+  Inventario: EggInventory;
 
   @ManyToOne(() => EggProduction)
-  production: EggProduction;
+  Produccion: EggProduction;
 
   @Column()
-  userId: string;
+  UsuarioId: string;
 
   @Column()
-  quantity: number;
+  Cantidad: number;
 
   @CreateDateColumn()
-  date: Date;
+  Fecha: Date;
 
 }

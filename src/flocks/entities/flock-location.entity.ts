@@ -8,19 +8,19 @@ import {
 import { Flock } from './flock.entity';
 import { Barn } from '../../barns/entities/barn.entity';
 
-@Entity('flock_locations')
+@Entity('Ubicacion_lote')
 export class FlockLocation {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
-  @ManyToOne(() => Flock, flock => flock.locations)
-  flock: Flock;
+  @ManyToOne(() => Flock, flock => flock.Ubicacion)
+  Lote: Flock;
 
-  @ManyToOne(() => Barn, barn => barn.flockLocations)
-  barn: Barn;
+  @ManyToOne(() => Barn, barn => barn.Ubicacion_lote)
+  Galpon: Barn;
 
   @CreateDateColumn()
-  date: Date;
+  Fecha: Date;
 
 }

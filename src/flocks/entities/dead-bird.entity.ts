@@ -9,17 +9,17 @@ import {
 
 import { Flock } from './flock.entity';
 
-@Entity('dead_birds')
+@Entity('Aves_fallecidas')
 export class DeadBird {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @Column()
-  quantity: number;
+  Cantidad: number;
 
   @ManyToOne(() => Flock)
-  flock: Flock;
+  Lote: Flock;
 
   @CreateDateColumn()
   createdAt: Date;

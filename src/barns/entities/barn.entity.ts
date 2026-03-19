@@ -10,23 +10,23 @@ import {
 import { FlockLocation } from '../../flocks/entities/flock-location.entity';
 import { FlockAssignmentHistory } from '../../flocks/entities/flock-assignment-history.entity';
 
-@Entity('barns')
+@Entity('Galpon')
 export class Barn {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @Column()
-  code: string;
+  Codigo: string;
 
   @Column()
-  name: string;
+  Nombre: string;
 
   @Column()
-  maxBirdCapacity: number;
+  Capacidad_max_aves: number;
 
   @Column('decimal')
-  length: number;
+  Longitud: number;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -34,12 +34,10 @@ export class Barn {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // Relación con ubicación de lotes
-  @OneToMany(() => FlockLocation, location => location.barn)
-  flockLocations: FlockLocation[];
+  @OneToMany(() => FlockLocation, location => location.Galpon)
+  Ubicacion_lote: FlockLocation[];
 
-  // Relación con historial de asignaciones
-  @OneToMany(() => FlockAssignmentHistory, history => history.barn)
-  assignmentHistory: FlockAssignmentHistory[];
+  @OneToMany(() => FlockAssignmentHistory, history => history.Galpon)
+  Asignacion_historial: FlockAssignmentHistory[];
 
 }

@@ -3,12 +3,12 @@ import { IsUUID, IsNumber, IsString } from "class-validator";
 export class RegisterDamagedEggsDto {
 
   @IsUUID()
-  inventoryId: string;
+  InventarioId: string;
 
   @IsNumber()
-  quantity: number;
+  Cantidad: number;
 
   @IsString()
-  reason: string;
+  Razon: string;
 
 }

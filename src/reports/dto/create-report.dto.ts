@@ -3,9 +3,9 @@ import { IsUUID, IsString } from "class-validator";
 export class CreateReportDto {
 
   @IsUUID()
-  userId: string;
+  Id_usuario: string;
 
   @IsString()
-  reportType: string;
+  Tipo_reporte: string;
 
 }

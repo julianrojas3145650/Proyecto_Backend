@@ -4,9 +4,9 @@ export class CreateBreedDto {
 
   @IsString()
   @MinLength(2)
-  name: string;
+  Nombre: string;
 
   @IsString()
-  description: string;
+  Descripcion: string;
 
 }

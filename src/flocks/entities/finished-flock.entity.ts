@@ -8,22 +8,22 @@ import {
 
 import { Flock } from './flock.entity';
 
-@Entity('finished_flocks')
+@Entity('Finalizacion_lote')
 export class FinishedFlock {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @Column()
-  quantity: number;
+  Cantidad: number;
 
   @Column()
-  reason: string;
+  Razon: string;
 
   @CreateDateColumn()
-  date: Date;
+  Fecha: Date;
 
   @ManyToOne(() => Flock)
-  flock: Flock;
+  Lote: Flock;
 
 }

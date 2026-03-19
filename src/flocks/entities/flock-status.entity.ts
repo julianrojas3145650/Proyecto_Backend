@@ -7,16 +7,16 @@ import {
 
 import { Flock } from './flock.entity';
 
-@Entity('flock_status')
+@Entity('Estado_lote')
 export class FlockStatus {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  Id: string;
 
   @Column()
-  status: string;
+  Estado: string;
 
-  @ManyToOne(() => Flock, flock => flock.statuses)
-  flock: Flock;
+  @ManyToOne(() => Flock, flock => flock.Estados)
+  Lote: Flock;
 
 }
