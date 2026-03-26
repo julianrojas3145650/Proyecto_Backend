@@ -35,7 +35,6 @@ export class UsersService {
 
     const saved = await this.usuarioRepo.save(usuario);
 
-    // Crear registro de auditoría
     await this.llamarUsuarioRepo.save(
       this.llamarUsuarioRepo.create({
         id_usuario: saved.id_usuario,

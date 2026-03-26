@@ -10,7 +10,7 @@ import { SeedService } from './seed.service';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot(AppDataSource.options), // ← usa el data-source que ya tiene todo
+    TypeOrmModule.forRoot(AppDataSource.options),
     TypeOrmModule.forFeature([User, Role, UserRole]),
   ],
   providers: [SeedService],

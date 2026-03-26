@@ -10,7 +10,7 @@ export class ReportsService {
   constructor(
     @InjectRepository(Report)
     private readonly reportRepo: Repository<Report>,
-  ) {}
+  ) { }
 
   async create(dto: CreateReportDto) {
     const report = this.reportRepo.create({
@@ -26,4 +26,10 @@ export class ReportsService {
     });
   }
 
+  async findOne(id_reporte: string) {
+    return await this.reportRepo.findOne({
+      where: { id_reporte },
+      relations: ['usuario'],
+    });
+  }
 }

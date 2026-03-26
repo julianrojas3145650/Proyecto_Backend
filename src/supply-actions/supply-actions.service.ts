@@ -10,15 +10,15 @@ export class SupplyActionsService {
   constructor(
     @InjectRepository(SupplyAction)
     private readonly supplyActionRepository: Repository<SupplyAction>,
-  ) {}
+  ) { }
 
   async create(dto: CreateSupplyActionDto): Promise<SupplyAction> {
     const existing = await this.supplyActionRepository.findOne({
-      where: { nombre_accion: dto.nombre_accion },
+      where: { nombre: dto.nombre },
     });
     if (existing) {
       throw new ConflictException(
-        `La acción "${dto.nombre_accion}" ya existe`,
+        `La acción "${dto.nombre}" ya existe`,
       );
     }
     const action = this.supplyActionRepository.create(dto);
@@ -29,18 +29,31 @@ export class SupplyActionsService {
     return this.supplyActionRepository.find();
   }
 
-  async findOne(id: string): Promise<SupplyAction> {
+  async findOne(id_accion_historial_movimiento: string): Promise<SupplyAction> {
     const action = await this.supplyActionRepository.findOne({
-      where: { id_historial_accion: id },
+      where: { id_accion_historial_movimiento: id_accion_historial_movimiento },
     });
     if (!action) {
-      throw new NotFoundException(`Acción con ID ${id} no encontrada`);
+      throw new NotFoundException(`Acción con ID ${id_accion_historial_movimiento} no encontrada`);
     }
     return action;
   }
 
   async update(id: string, dto: UpdateSupplyActionDto): Promise<SupplyAction> {
     const action = await this.findOne(id);
+
+    if (dto.nombre) {
+      const existing = await this.supplyActionRepository.findOne({
+        where: { nombre: dto.nombre },
+      });
+
+      if (existing && existing.id_accion_historial_movimiento !== id) {
+        throw new ConflictException(
+          `La acción "${dto.nombre}" ya existe`,
+        );
+      }
+    }
+
     Object.assign(action, dto);
     return this.supplyActionRepository.save(action);
   }

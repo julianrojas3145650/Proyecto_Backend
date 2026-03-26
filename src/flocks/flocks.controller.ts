@@ -19,16 +19,11 @@ export class FlocksController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.flocksService.findOne(+id);
+    return this.flocksService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFlockDto: UpdateFlockDto) {
-    return this.flocksService.update(+id, updateFlockDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.flocksService.remove(+id);
+    return this.flocksService.update(id, updateFlockDto);
   }
 }

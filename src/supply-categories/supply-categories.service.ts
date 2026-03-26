@@ -31,7 +31,7 @@ export class SupplyCategoriesService {
 
   async findOne(id: string): Promise<SupplyCategory> {
     const category = await this.supplyCategoryRepository.findOne({
-      where: { id_categoria: id },
+      where: { id_categoria_insumo: id },
       relations: ['insumos'],
     });
     if (!category) {

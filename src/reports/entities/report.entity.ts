@@ -1,4 +1,4 @@
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../../users/entities/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('reporte')
@@ -13,5 +13,4 @@ export class Report {
 
   @Column()
   tipo_reporte: string;
-
 }

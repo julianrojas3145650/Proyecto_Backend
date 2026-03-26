@@ -41,7 +41,7 @@ export class SupplyHistoryService {
 
       // Buscar acción
       const accion = await manager.findOne(SupplyAction, {
-        where: { id: dto.id_historial_accion },
+        where: { id_accion_historial_movimiento: dto.id_historial_accion },
       });
 
       if (!accion) {
@@ -93,7 +93,7 @@ export class SupplyHistoryService {
   async findByInsumo(idInsumo: string): Promise<SupplyHistory[]> {
     return this.historyRepository.find({
       where: {
-        insumo: { id_insumo: idInsumo }, // ✅ forma correcta con relaciones
+        insumo: { id_insumo: idInsumo },
       },
       relations: ['insumo', 'accion'],
       order: { fecha: 'DESC' },

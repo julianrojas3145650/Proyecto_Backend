@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFlockDto } from './dto/create-flock.dto';
-import { UpdateFlockDto } from './dto/update-flock.dto';
 
 @Injectable()
 export class FlocksService {
-  create(createFlockDto: CreateFlockDto) {
-    return 'This action adds a new flock';
+
+  create(createFlockDto) {
+    return "Create flock";
   }
 
   findAll() {
-    return `This action returns all flocks`;
+    return "Get all flocks";
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} flock`;
+  findOne(id: string) {
+    return `Get flock ${id}`;
   }
 
-  update(id: number, updateFlockDto: UpdateFlockDto) {
-    return `This action updates a #${id} flock`;
+  update(id: string, updateFlockDto) {
+    return `Update flock ${id}`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} flock`;
+  assignFlock(assignDto) {
+    return "Assign flock to barn";
   }
+
+  registerDeadBirds(dto) {
+    return "Register dead birds";
+  }
+
+  finishFlock(dto) {
+    return "Finish flock";
+  }
+
 }
