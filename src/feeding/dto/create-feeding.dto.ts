@@ -1,12 +1,15 @@
 import { IsUUID, IsNumber } from "class-validator";
 
-export class AssignFlockDto {
+export class CreateFeedingDto {
 
   @IsUUID()
-  galponId: string;
+  id_usuario: string;
 
   @IsUUID()
-  loteId: string;
+  id_lote: string;
+
+  @IsUUID()
+  id_insumo: string;
 
   @IsNumber()
   cantidad: number;

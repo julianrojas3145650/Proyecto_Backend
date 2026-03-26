@@ -1,18 +1,18 @@
 import {Injectable, NotFoundException, BadRequestException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Insumo } from './entities/supply.entity';
+import { Supply } from './entities/supply.entity';
 import { CreateSupplyDto } from './dto/create-supply.dto';
 import { UpdateSupplyDto } from './dto/update-supply.dto';
 
 @Injectable()
 export class SuppliesService {
   constructor(
-    @InjectRepository(Insumo)
-    private readonly insumoRepository: Repository<Insumo>,
+    @InjectRepository(Supply)
+    private readonly insumoRepository: Repository<Supply>,
   ) {}
 
-  async create(dto: CreateSupplyDto): Promise<Insumo> {
+  async create(dto: CreateSupplyDto): Promise<Supply> {
     const insumo = this.insumoRepository.create({
       ...dto,
       fecha: new Date(dto.fecha),
@@ -20,15 +20,15 @@ export class SuppliesService {
     return this.insumoRepository.save(insumo);
   }
 
-  async findAll(): Promise<Insumo[]> {
+  async findAll(): Promise<Supply[]> {
     return this.insumoRepository.find({
       relations: ['categoria', 'unidadMedida', 'llamarUsuario'],
     });
   }
 
-  async findOne(id: number): Promise<Insumo> {
+  async findOne(id: string): Promise<Supply> {
     const insumo = await this.insumoRepository.findOne({
-      where: { id_insumos: id },
+      where: { id_insumo: id },
       relations: ['categoria', 'unidadMedida', 'llamarUsuario', 'historial'],
     });
     if (!insumo) {
@@ -37,7 +37,7 @@ export class SuppliesService {
     return insumo;
   }
 
-  async update(id: number, dto: UpdateSupplyDto): Promise<Insumo> {
+  async update(id: string, dto: UpdateSupplyDto): Promise<Supply> {
     const insumo = await this.findOne(id);
     const updated = Object.assign(insumo, {
       ...dto,
@@ -46,9 +46,9 @@ export class SuppliesService {
     return this.insumoRepository.save(updated);
   }
 
-  async ajustarCantidad(id: number, cantidad: number): Promise<Insumo> {
+  async ajustarCantidad(id: string, cantidad: string): Promise<Supply> {
     const insumo = await this.findOne(id);
-    const nuevaCantidad = Number(insumo.cantidad) + cantidad;
+    const nuevaCantidad = Number(insumo.cantidad) + Number(cantidad);
     if (nuevaCantidad < 0) {
       throw new BadRequestException(
         `Stock insuficiente. Disponible: ${insumo.cantidad}`,
@@ -58,7 +58,7 @@ export class SuppliesService {
     return this.insumoRepository.save(insumo);
   }
 
-  async remove(id: number): Promise<{ message: string }> {
+  async remove(id: string): Promise<{ message: string }> {
     const insumo = await this.findOne(id);
     await this.insumoRepository.remove(insumo);
     return { message: `Insumo con ID ${id} eliminado correctamente` };

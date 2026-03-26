@@ -4,5 +4,5 @@ export class CreateSupplyActionDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
-  nombre_accion: string;
+  nombre: string;
 }

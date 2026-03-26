@@ -1,26 +1,22 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne
-} from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Flock } from './flock.entity';
 import { Barn } from '../../barns/entities/barn.entity';
 
-@Entity('Historial_asignacion_lote')
+@Entity('historial_asignacion_lote')
 export class FlockAssignmentHistory {
 
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id_historial_asignacion_lote: string;
 
   @Column()
-  Cantidad_asignada: number;
+  cantidad_asignada: number;
 
-  @ManyToOne(() => Flock)
-  Lote: Flock;
+  @ManyToOne(() => Flock, flock => flock.ubicacion)
+  @JoinColumn({ name: 'id_lote' })
+  lote: Flock;
 
-  @ManyToOne(() => Barn)
-  Galpon: Barn;
+  @ManyToOne(() => Barn, barn => barn.ubicacion_lote)
+  @JoinColumn({ name: 'id_galpon' })
+  galpon: Barn;
 
 }

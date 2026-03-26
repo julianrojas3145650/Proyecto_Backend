@@ -1,9 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
+<<<<<<< HEAD
 @Entity('Tipo_huevo')
 export class EggType {
     @PrimaryGeneratedColumn()
     id_tipo: number;
+=======
+@Entity('tipo_huevo')
+export class EggType {
+    @PrimaryGeneratedColumn('uuid')
+    id_tipo: string;
+>>>>>>> chauxdev
 
     @Column({length: 255})
     tipo: string;

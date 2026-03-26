@@ -1,33 +1,26 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  CreateDateColumn
-} from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn } from 'typeorm';
 import { EggInventory } from './egg-inventory.entity';
 import { EggProduction } from './egg-production.entity';
 
-@Entity('Historial_Huevo')
+@Entity('historial_huevo')
 export class EggHistory {
 
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id_historial_huevo: string;
 
   @ManyToOne(() => EggInventory, inventory => inventory.history)
-  Inventario: EggInventory;
+  inventario: EggInventory;
 
   @ManyToOne(() => EggProduction)
-  Produccion: EggProduction;
+  produccion: EggProduction;
 
   @Column()
-  UsuarioId: string;
+  usuarioId: string;
 
   @Column()
-  Cantidad: number;
+  cantidad: number;
 
   @CreateDateColumn()
-  Fecha: Date;
+  fecha: Date;
 
 }

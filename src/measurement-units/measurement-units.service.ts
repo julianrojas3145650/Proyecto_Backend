@@ -31,7 +31,7 @@ export class MeasurementUnitsService {
     });
   }
 
-  async findOne(id: number): Promise<MeasurementUnit> {
+  async findOne(id: string): Promise<MeasurementUnit> {
     const unit = await this.measurementUnitRepository.findOne({
       where: { id_unidad_medida: id },
       relations: ['insumos'],
@@ -42,13 +42,13 @@ export class MeasurementUnitsService {
     return unit;
   }
 
-  async update(id: number, dto: UpdateMeasurementUnitDto): Promise<MeasurementUnit> {
+  async update(id: string, dto: UpdateMeasurementUnitDto): Promise<MeasurementUnit> {
     const unit = await this.findOne(id);
     Object.assign(unit, dto);
     return this.measurementUnitRepository.save(unit);
   }
 
-  async remove(id: number): Promise<{ message: string }> {
+  async remove(id: string): Promise<{ message: string }> {
     const unit = await this.findOne(id);
     await this.measurementUnitRepository.remove(unit);
     return { message: `Unidad de medida con ID ${id} eliminada correctamente` };

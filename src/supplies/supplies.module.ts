@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SuppliesService } from './supplies.service';
 import { SuppliesController } from './supplies.controller';
-import { Insumo } from './entities/supply.entity';
+import { Supply } from './entities/supply.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Insumo])],
+  imports: [TypeOrmModule.forFeature([Supply])],
   controllers: [SuppliesController],
   providers: [SuppliesService],
   exports: [SuppliesService, TypeOrmModule],

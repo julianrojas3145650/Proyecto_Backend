@@ -6,15 +6,17 @@ export class CreateFlockDto {
   nombre: string;
 
   @IsNumber()
-  Total_aves: number;
+
+  total_aves: number;
 
   @IsUUID()
-  RazaId: string;
+  razaId: string;
 
   @IsString()
   observacion: string;
 
   @IsString()
-  Racion_alimento: string;
+
+  racion_alimento: string;
 
 }

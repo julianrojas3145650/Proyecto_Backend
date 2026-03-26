@@ -22,12 +22,12 @@ export class SupplyHistoryController {
    * GET /supply-history/by-supply/:idInsumo
    */
   @Get('by-supply/:idInsumo')
-  findByInsumo(@Param('idInsumo', ParseIntPipe) idInsumo: number) {
+  findByInsumo(@Param('idInsumo') idInsumo: string) {
     return this.supplyHistoryService.findByInsumo(idInsumo);
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id') id: string) {
     return this.supplyHistoryService.findOne(id);
   }
 }
