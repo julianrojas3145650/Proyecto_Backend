@@ -1,15 +1,16 @@
-import { IsDateString, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength, IsUUID, IsInt } from 'class-validator';
 
 export class CreateSupplyHistoryDto {
-  @IsInt()
-  @IsPositive()
-  id_insumos: number;
+  
+  @IsUUID()
+  id_insumos: string;
 
   @IsInt()
   @IsPositive()
-  id_historial_accion: number;
+  id_historial_accion: string;
 
   @IsNumber()
+  @IsPositive()
   cantidad: number;
 
   @IsString()

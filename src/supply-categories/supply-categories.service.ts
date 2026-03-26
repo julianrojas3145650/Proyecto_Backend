@@ -29,7 +29,7 @@ export class SupplyCategoriesService {
     return this.supplyCategoryRepository.find({ relations: ['insumos'] });
   }
 
-  async findOne(id: number): Promise<SupplyCategory> {
+  async findOne(id: string): Promise<SupplyCategory> {
     const category = await this.supplyCategoryRepository.findOne({
       where: { id_categoria: id },
       relations: ['insumos'],
@@ -40,13 +40,13 @@ export class SupplyCategoriesService {
     return category;
   }
 
-  async update(id: number, dto: UpdateSupplyCategoryDto): Promise<SupplyCategory> {
+  async update(id: string, dto: UpdateSupplyCategoryDto): Promise<SupplyCategory> {
     const category = await this.findOne(id);
     Object.assign(category, dto);
     return this.supplyCategoryRepository.save(category);
   }
 
-  async remove(id: number): Promise<{ message: string }> {
+  async remove(id: string): Promise<{ message: string }> {
     const category = await this.findOne(id);
     await this.supplyCategoryRepository.remove(category);
     return { message: `Categoría con ID ${id} eliminada correctamente` };

@@ -1,14 +1,14 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Insumo } from '../../supplies/entities/supply.entity';
+import { Supply } from '../../supplies/entities/supply.entity';
 import { SupplyAction } from '../../supply-actions/entities/supply-action.entity';
 
 @Entity('historial_insumo')
 export class SupplyHistory {
-  @PrimaryGeneratedColumn()
-  id_historial_insumo: number;
+  @PrimaryGeneratedColumn('uuid')
+  id_historial_insumo: string;
 
   @Column()
-  id_insumos: number;
+  id_insumos: string;
 
   @Column()
   id_historial_accion: number;
@@ -22,10 +22,9 @@ export class SupplyHistory {
   @Column({ type: 'timestamp' })
   fecha: Date;
 
-  // Relations
-  @ManyToOne(() => Insumo, (insumo) => insumo.historial)
+  @ManyToOne(() => Supply, (insumo) => insumo.historial)
   @JoinColumn({ name: 'id_insumos' })
-  insumo: Insumo;
+  insumo: Supply;
 
   @ManyToOne(() => SupplyAction, (action) => action.historial)
   @JoinColumn({ name: 'id_historial_accion' })

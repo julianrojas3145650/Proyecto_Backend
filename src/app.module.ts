@@ -12,7 +12,7 @@ import { BarnsModule } from './barns/barns.module';
 import { FlocksModule } from './flocks/flocks.module';
 import { EggTypesModule } from './egg-types/egg-types.module';
 import { EggInventoryModule } from './egg-inventory/egg-inventory.module';
-import { FeedingsModule } from './feedings/feedings.module';
+import { FeedingModule } from './feeding/feeding.module';
 import { ReportsModule } from './reports/reports.module';
 import { SupplyHistoryModule } from './supply-history/supply-history.module';
 import { SupplyActionsModule } from './supply-actions/supply-actions.module';
@@ -44,11 +44,12 @@ import { AuthModule } from './auth/auth.module';
     FlocksModule,
     EggTypesModule,
     EggInventoryModule,
-    FeedingsModule,
+    FeedingModule,
     ReportsModule,
     SupplyHistoryModule,
     SupplyActionsModule,
-    AuthModule
+    AuthModule,
+    FeedingModule
   ],
   controllers: [],
   providers: [],

@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SupplyHistoryService } from './supply-history.service';
 import { SupplyHistoryController } from './supply-history.controller';
 import { SupplyHistory } from './entities/supply-history.entity';
-import { Insumo } from '../supplies/entities/supply.entity';
+import { Supply } from '../supplies/entities/supply.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SupplyHistory, Insumo])],
+  imports: [TypeOrmModule.forFeature([SupplyHistory, Supply])],
   controllers: [SupplyHistoryController],
   providers: [SupplyHistoryService],
   exports: [SupplyHistoryService],

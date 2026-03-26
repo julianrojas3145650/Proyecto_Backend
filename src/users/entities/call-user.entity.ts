@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { User } from './user.entity';
+import { Supply } from '../../supplies/entities/supply.entity';
 
 @Entity('llamar_usuario')
 export class CallUser {
@@ -18,4 +19,7 @@ export class CallUser {
   @ManyToOne(() => User, (usuario) => usuario.llamarUsuarios)
   @JoinColumn({ name: 'id_usuario' })
   usuario: User;
+
+  @OneToMany(() => Supply, (supply) => supply.llamarUsuario)
+  insumos: Supply[];
 }

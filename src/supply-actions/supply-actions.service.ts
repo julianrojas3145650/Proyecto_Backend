@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SupplyAction } from './entities/supply-action.entity';
@@ -33,7 +29,7 @@ export class SupplyActionsService {
     return this.supplyActionRepository.find();
   }
 
-  async findOne(id: number): Promise<SupplyAction> {
+  async findOne(id: string): Promise<SupplyAction> {
     const action = await this.supplyActionRepository.findOne({
       where: { id_historial_accion: id },
     });
@@ -43,13 +39,13 @@ export class SupplyActionsService {
     return action;
   }
 
-  async update(id: number, dto: UpdateSupplyActionDto): Promise<SupplyAction> {
+  async update(id: string, dto: UpdateSupplyActionDto): Promise<SupplyAction> {
     const action = await this.findOne(id);
     Object.assign(action, dto);
     return this.supplyActionRepository.save(action);
   }
 
-  async remove(id: number): Promise<{ message: string }> {
+  async remove(id: string): Promise<{ message: string }> {
     const action = await this.findOne(id);
     await this.supplyActionRepository.remove(action);
     return { message: `Acción con ID ${id} eliminada correctamente` };

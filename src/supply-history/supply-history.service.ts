@@ -4,9 +4,10 @@ import { Repository, DataSource } from 'typeorm';
 import { SupplyHistory } from './entities/supply-history.entity';
 import { CreateSupplyHistoryDto } from './dto/create-supply-history.dto';
 import { UpdateSupplyHistoryDto } from './dto/update-supply-history.dto';
-import { Insumo } from '../supplies/entities/supply.entity';
+import { Supply } from '../supplies/entities/supply.entity';
+import { SupplyAction } from '../supply-actions/entities/supply-action.entity';
 
-// Acciones que reducen stock (IDs o nombres de accion)
+// Acciones que reducen stock (por nombre)
 const ACCIONES_SALIDA = ['SALIDA', 'CONSUMO', 'BAJA', 'MERMA'];
 
 @Injectable()
@@ -14,36 +15,50 @@ export class SupplyHistoryService {
   constructor(
     @InjectRepository(SupplyHistory)
     private readonly historyRepository: Repository<SupplyHistory>,
-    @InjectRepository(Insumo)
-    private readonly insumoRepository: Repository<Insumo>,
-    private readonly dataSource: DataSource,
-  ) {}
 
-  /**
-   * Registra un movimiento en el historial y actualiza el stock del insumo
-   * dentro de una transacción atómica.
-   */
+    @InjectRepository(Supply)
+    private readonly insumoRepository: Repository<Supply>,
+
+    @InjectRepository(SupplyAction)
+    private readonly actionRepository: Repository<SupplyAction>,
+
+    private readonly dataSource: DataSource,
+  ) { }
+
   async create(dto: CreateSupplyHistoryDto): Promise<SupplyHistory> {
     return this.dataSource.transaction(async (manager) => {
-      // 1. Verificar que existe el insumo
-      const insumo = await manager.findOne(Insumo, {
-        where: { id_insumos: dto.id_insumos },
-        relations: [],
+
+      // 1. Buscar insumo (UUID correcto)
+      const insumo = await manager.findOne(Supply, {
+        where: { id_insumo: dto.id_insumos },
       });
+
       if (!insumo) {
         throw new NotFoundException(
           `Insumo con ID ${dto.id_insumos} no encontrado`,
         );
       }
 
-      // 2. Verificar acción - si es acción de salida se resta, si es entrada se suma
+      // Buscar acción
+      const accion = await manager.findOne(SupplyAction, {
+        where: { id: dto.id_historial_accion },
+      });
+
+      if (!accion) {
+        throw new NotFoundException(
+          `Acción con ID ${dto.id_historial_accion} no encontrada`,
+        );
+      }
+
+      // 3. Validar si es salida
       const accionSalida = ACCIONES_SALIDA.includes(
-        String(dto.id_historial_accion).toUpperCase(),
+        accion.nombre.toUpperCase(),
       );
 
+      // 4. Calcular nueva cantidad
       const nuevaCantidad = accionSalida
-        ? Number(insumo.cantidad) - dto.cantidad
-        : Number(insumo.cantidad) + dto.cantidad;
+        ? Number(insumo.cantidad) - Number(dto.cantidad)
+        : Number(insumo.cantidad) + Number(dto.cantidad);
 
       if (nuevaCantidad < 0) {
         throw new BadRequestException(
@@ -51,14 +66,19 @@ export class SupplyHistoryService {
         );
       }
 
-      // 3. Actualizar stock del insumo
-      await manager.update(Insumo, dto.id_insumos, { cantidad: nuevaCantidad });
+      // 5. Actualizar stock
+      insumo.cantidad = nuevaCantidad;
+      await manager.save(insumo);
 
-      // 4. Guardar historial
+      // 6. Guardar historial
       const historial = manager.create(SupplyHistory, {
-        ...dto,
+        cantidad: dto.cantidad,
+        descripcion: dto.descripcion,
         fecha: new Date(dto.fecha),
+        insumo: insumo,
+        accion: accion,
       });
+
       return manager.save(SupplyHistory, historial);
     });
   }
@@ -70,37 +90,44 @@ export class SupplyHistoryService {
     });
   }
 
-  async findByInsumo(idInsumo: number): Promise<SupplyHistory[]> {
+  async findByInsumo(idInsumo: string): Promise<SupplyHistory[]> {
     return this.historyRepository.find({
-      where: { id_insumos: idInsumo },
+      where: {
+        insumo: { id_insumo: idInsumo }, // ✅ forma correcta con relaciones
+      },
       relations: ['insumo', 'accion'],
       order: { fecha: 'DESC' },
     });
   }
 
-  async findOne(id: number): Promise<SupplyHistory> {
+  async findOne(id: string): Promise<SupplyHistory> {
     const history = await this.historyRepository.findOne({
       where: { id_historial_insumo: id },
       relations: ['insumo', 'accion'],
     });
+
     if (!history) {
       throw new NotFoundException(`Historial con ID ${id} no encontrado`);
     }
+
     return history;
   }
 
-  async update(id: number, dto: UpdateSupplyHistoryDto): Promise<SupplyHistory> {
+  async update(id: string, dto: UpdateSupplyHistoryDto): Promise<SupplyHistory> {
     const history = await this.findOne(id);
+
     const updated = Object.assign(history, {
       ...dto,
       ...(dto.fecha && { fecha: new Date(dto.fecha) }),
     });
+
     return this.historyRepository.save(updated);
   }
 
-  async remove(id: number): Promise<{ message: string }> {
+  async remove(id: string): Promise<{ message: string }> {
     const history = await this.findOne(id);
     await this.historyRepository.remove(history);
+
     return { message: `Historial con ID ${id} eliminado correctamente` };
   }
 }
