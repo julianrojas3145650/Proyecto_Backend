@@ -27,24 +27,24 @@ export class BarnsService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id_galpon: string) {
 
     const barn = await this.barnRepository.findOne({
-      where: { id },
+      where: { id_galpon },
       relations: ['flockLocations', 'assignmentHistory']
     });
 
     if (!barn) {
-      throw new NotFoundException(`Barn with id ${id} not found`);
+      throw new NotFoundException(`Barn with id ${id_galpon} not found`);
     }
 
     return barn;
 
   }
 
-  async update(id: string, updateBarnDto: UpdateBarnDto) {
+  async update(id_galpon: string, updateBarnDto: UpdateBarnDto) {
 
-    const barn = await this.findOne(id);
+    const barn = await this.findOne(id_galpon);
 
     Object.assign(barn, updateBarnDto);
 
@@ -52,9 +52,9 @@ export class BarnsService {
 
   }
 
-  async remove(id: string) {
+  async remove(id_galpon: string) {
 
-    const barn = await this.findOne(id);
+    const barn = await this.findOne(id_galpon);
 
     await this.barnRepository.remove(barn);
 

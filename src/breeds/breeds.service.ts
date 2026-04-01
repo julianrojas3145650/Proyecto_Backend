@@ -26,20 +26,20 @@ export class BreedsService {
     return await this.breedRepository.find();
   }
 
-  async findOne(id: string) {
+  async findOne(id_raza: string) {
 
-    const breed = await this.breedRepository.findOneBy({ id });
+    const breed = await this.breedRepository.findOneBy({ id_raza });
 
     if (!breed) {
-      throw new NotFoundException(`Breed with id ${id} not found`);
+      throw new NotFoundException(`Breed with id ${id_raza} not found`);
     }
 
     return breed;
   }
 
-  async update(id: string, updateBreedDto: UpdateBreedDto) {
+  async update(id_raza: string, updateBreedDto: UpdateBreedDto) {
 
-    const breed = await this.findOne(id);
+    const breed = await this.findOne(id_raza);
 
     Object.assign(breed, updateBreedDto);
 
@@ -47,9 +47,9 @@ export class BreedsService {
 
   }
 
-  async remove(id: string) {
+  async remove(id_raza: string) {
 
-    const breed = await this.findOne(id);
+    const breed = await this.findOne(id_raza);
 
     await this.breedRepository.remove(breed);
 

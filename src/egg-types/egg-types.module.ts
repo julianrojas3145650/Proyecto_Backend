@@ -1,9 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-<<<<<<< HEAD
-
-=======
->>>>>>> chauxdev
 import { EggTypesService } from './egg-types.service';
 import { EggTypesController } from './egg-types.controller';
 import { EggType } from './entities/egg-type.entity';
