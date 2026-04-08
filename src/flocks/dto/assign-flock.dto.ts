@@ -3,12 +3,12 @@ import { IsUUID, IsNumber } from "class-validator";
 export class AssignFlockDto {
 
   @IsUUID()
-  GalponId: string;
+  galponId: string;
 
   @IsUUID()
-  LoteId: string;
+  loteId: string;
 
   @IsNumber()
-  Cantidad: number;
+  cantidad: number;
 
 }

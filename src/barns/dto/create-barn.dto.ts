@@ -4,16 +4,16 @@ export class CreateBarnDto {
 
   @IsString()
   @MinLength(2)
-  Codigo: string;
+  codigo: string;
 
   @IsString()
   @MinLength(2)
-  Nombre: string;
+  nombre: string;
 
   @IsNumber()
-  Capacidad_max_aves: number;
+  capacidad_max_aves: number;
 
   @IsNumber()
-  Longitud: number;
+  longitud: number;
 
 }

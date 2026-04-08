@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CreateReportDto } from './dto/create-report.dto';
 
 @Controller('reports')
 export class ReportsController {
+  reportsService: any;
 
   constructor(private readonly service: ReportsService) {}
 
@@ -17,5 +17,8 @@ export class ReportsController {
   findAll() {
     return this.service.findAll();
   }
-
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.reportsService.findOne(id);
+  }
 }

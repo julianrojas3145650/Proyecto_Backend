@@ -3,9 +3,9 @@ import { IsUUID, IsNumber } from "class-validator";
 export class RegisterDeadBirdsDto {
 
   @IsUUID()
-  LoteId: string;
+  loteId: string;
 
   @IsNumber()
-  Cantidad: number;
+  cantidad: number;
 
 }

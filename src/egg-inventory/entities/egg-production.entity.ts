@@ -1,34 +1,26 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  CreateDateColumn,
-  OneToMany
-} from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, OneToMany } from 'typeorm';
 import { Flock } from '../../flocks/entities/flock.entity';
 import { EggInventory } from './egg-inventory.entity';
 
-@Entity('Produccion_huevo')
+@Entity('produccion_huevo')
 export class EggProduction {
 
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id_produccion_huevo: string;
 
-  @ManyToOne(() => Flock, flock => flock.Produccion_huevo)
-  Lote: Flock;
-
-  @Column()
-  Tipo_huevoId: string;
+  @ManyToOne(() => Flock, flock => flock.produccion_huevo)
+  lote: Flock;
 
   @Column()
-  Cantidady: number;
+  tipo_huevoId: string;
+
+  @Column()
+  cantidady: number;
 
   @CreateDateColumn()
-  ProduccionFecha: Date;
+  produccionFecha: Date;
 
-  @OneToMany(() => EggInventory, inventory => inventory.Produccion)
+  @OneToMany(() => EggInventory, inventory => inventory.produccion)
   inventories: EggInventory[];
 
 }

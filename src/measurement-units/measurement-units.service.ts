@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MeasurementUnit } from './entities/measurement-unit.entity';
 import { CreateMeasurementUnitDto } from './dto/create-measurement-unit.dto';
 import { UpdateMeasurementUnitDto } from './dto/update-measurement-unit.dto';
 
 @Injectable()
 export class MeasurementUnitsService {
-  create(createMeasurementUnitDto: CreateMeasurementUnitDto) {
-    return 'This action adds a new measurementUnit';
+  constructor(
+    @InjectRepository(MeasurementUnit)
+    private readonly measurementUnitRepository: Repository<MeasurementUnit>,
+  ) {}
+
+  async create(dto: CreateMeasurementUnitDto): Promise<MeasurementUnit> {
+    const existing = await this.measurementUnitRepository.findOne({
+      where: { nombre: dto.nombre },
+    });
+    if (existing) {
+      throw new ConflictException(
+        `La unidad de medida "${dto.nombre}" ya existe`,
+      );
+    }
+    const unit = this.measurementUnitRepository.create(dto);
+    return this.measurementUnitRepository.save(unit);
   }
 
-  findAll() {
-    return `This action returns all measurementUnits`;
+  async findAll(): Promise<MeasurementUnit[]> {
+    return this.measurementUnitRepository.find({
+      relations: ['insumos'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} measurementUnit`;
+  async findOne(id: string): Promise<MeasurementUnit> {
+    const unit = await this.measurementUnitRepository.findOne({
+      where: { id_unidad_medida: id },
+      relations: ['insumos'],
+    });
+    if (!unit) {
+      throw new NotFoundException(`Unidad de medida con ID ${id} no encontrada`);
+    }
+    return unit;
   }
 
-  update(id: number, updateMeasurementUnitDto: UpdateMeasurementUnitDto) {
-    return `This action updates a #${id} measurementUnit`;
+  async update(id: string, dto: UpdateMeasurementUnitDto): Promise<MeasurementUnit> {
+    const unit = await this.findOne(id);
+    Object.assign(unit, dto);
+    return this.measurementUnitRepository.save(unit);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} measurementUnit`;
+  async remove(id: string): Promise<{ message: string }> {
+    const unit = await this.findOne(id);
+    await this.measurementUnitRepository.remove(unit);
+    return { message: `Unidad de medida con ID ${id} eliminada correctamente` };
   }
 }

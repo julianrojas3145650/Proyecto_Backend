@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity('Tipo_huevo')
+@Entity('tipo_huevo')
 export class EggType {
-    @PrimaryGeneratedColumn()
-    id_tipo: number;
+    @PrimaryGeneratedColumn('uuid')
+    id_tipo: string;
 
     @Column({length: 255})
     tipo: string;

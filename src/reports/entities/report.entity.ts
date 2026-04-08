@@ -1,19 +1,16 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn
-} from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity('reportes')
+@Entity('reporte')
 export class Report {
 
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id_reporte: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario: User;
 
   @Column()
-  Id_usuario: string;
-
-  @Column()
-  Tipo_reporte: string;
-
+  tipo_reporte: string;
 }

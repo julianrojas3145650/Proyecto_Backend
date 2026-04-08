@@ -19,16 +19,16 @@ export class EggTypesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.eggTypesService.findOne(+id);
+    return this.eggTypesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEggTypeDto: UpdateEggTypeDto) {
-    return this.eggTypesService.update(+id, updateEggTypeDto);
+    return this.eggTypesService.update(id, updateEggTypeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.eggTypesService.remove(+id);
+    return this.eggTypesService.remove(id);
   }
 }
