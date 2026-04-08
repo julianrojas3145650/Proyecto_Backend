@@ -1,25 +1,18 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn
-} from 'typeorm';
 
-import { Flock } from './flock.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';import { Flock } from './flock.entity';
 
-@Entity('Aves_fallecidas')
+@Entity('aves_fallecidas')
 export class DeadBird {
 
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id_aves_fallecidas: string;
 
   @Column()
-  Cantidad: number;
+  cantidad: number;
 
-  @ManyToOne(() => Flock)
-  Lote: Flock;
+  @ManyToOne(() => Flock, flock => flock.ubicacion)
+  @JoinColumn({ name: 'id_lote' })
+  lote: Flock;
 
   @CreateDateColumn()
   createdAt: Date;

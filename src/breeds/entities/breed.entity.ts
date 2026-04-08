@@ -1,15 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('Raza')
+@Entity('raza')
 export class Breed {
 
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id_raza: string;
 
   @Column({ length: 255 })
-  Nombre: string;
+  nombre: string;
 
   @Column({ length: 255 })
-  Descripcion: string;
-
+  descripcion: string;
 }

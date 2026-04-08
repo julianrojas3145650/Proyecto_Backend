@@ -1,29 +1,23 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  CreateDateColumn
-} from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
 import { Flock } from './flock.entity';
 
-@Entity('Finalizacion_lote')
+@Entity('finalizacion_lote')
 export class FinishedFlock {
 
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id_finalizacion_lote: string;
 
   @Column()
-  Cantidad: number;
+  cantidad: number;
 
   @Column()
-  Razon: string;
+  razon: string;
 
   @CreateDateColumn()
-  Fecha: Date;
+  fecha: Date;
 
-  @ManyToOne(() => Flock)
-  Lote: Flock;
+  @ManyToOne(() => Flock, flock => flock.ubicacion)
+  @JoinColumn({ name: 'id_lote' })
+  lote: Flock;
 
 }
