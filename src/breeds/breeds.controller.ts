@@ -9,8 +9,8 @@ export class BreedsController {
   constructor(private readonly breedsService: BreedsService) {}
 
   @Post()
-  create(@Body() createBreedDto: CreateBreedDto) {
-    return this.breedsService.create(createBreedDto);
+  create(@Body() dto: CreateBreedDto) {
+    return this.breedsService.create(dto);
   }
 
   @Get()
@@ -24,13 +24,12 @@ export class BreedsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBreedDto: UpdateBreedDto) {
-    return this.breedsService.update(id, updateBreedDto);
+  update(@Param('id') id: string, @Body() dto: UpdateBreedDto) {
+    return this.breedsService.update(id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.breedsService.remove(id);
   }
-
 }

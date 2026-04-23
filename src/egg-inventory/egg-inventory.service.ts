@@ -1,22 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class EggInventoryService {
 
+  private readonly logger = new Logger(EggInventoryService.name);
+
   registerProduction(dto) {
-    return "Register egg production";
+    this.logger.log(`Producción registrada: ${JSON.stringify(dto)}`);
+
+    return {
+      message: 'Producción de huevos registrada correctamente',
+      data: dto
+    };
   }
 
   registerDamaged(dto) {
-    return "Register damaged eggs";
+    this.logger.warn(`Huevos dañados registrados: ${JSON.stringify(dto)}`);
+
+    return {
+      message: 'Huevos dañados registrados correctamente',
+      data: dto
+    };
   }
 
   findAll() {
-    return "Get egg inventory";
+    this.logger.log('Consultando inventario de huevos');
+
+    return {
+      message: 'Inventario de huevos obtenido',
+      data: []
+    };
   }
 
   findOne(id: string) {
-    return `Get egg inventory ${id}`;
-  }
+    this.logger.log(`Consultando inventario ID: ${id}`);
 
+    return {
+      message: `Inventario ${id} encontrado`,
+      data: { id }
+    };
+  }
 }

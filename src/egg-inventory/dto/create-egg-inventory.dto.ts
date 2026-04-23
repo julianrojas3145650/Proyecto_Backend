@@ -3,12 +3,11 @@ import { IsUUID, IsNumber } from "class-validator";
 export class CreateEggProductionDto {
 
   @IsUUID()
-  LoteId: string;
+  loteId!: string;
 
   @IsUUID()
-  Tipo_huevoId: string;
+  tipoHuevoId!: string;
 
   @IsNumber()
-  Cantidad: number;
-
+  cantidad!: number;
 }

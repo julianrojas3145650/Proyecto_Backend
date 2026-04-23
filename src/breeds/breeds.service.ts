@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -9,21 +9,34 @@ import { UpdateBreedDto } from './dto/update-breed.dto';
 @Injectable()
 export class BreedsService {
 
+  private readonly logger = new Logger(BreedsService.name);
+
   constructor(
     @InjectRepository(Breed)
     private readonly breedRepository: Repository<Breed>,
   ) {}
 
-  async create(createBreedDto: CreateBreedDto) {
+  async create(dto: CreateBreedDto) {
 
-    const breed = this.breedRepository.create(createBreedDto);
+    const breed = this.breedRepository.create(dto);
+    const saved = await this.breedRepository.save(breed);
 
-    return await this.breedRepository.save(breed);
+    this.logger.log(`Raza creada: ${saved.id_raza}`);
 
+    return {
+      message: 'Raza creada correctamente',
+      data: saved
+    };
   }
 
   async findAll() {
-    return await this.breedRepository.find();
+
+    const data = await this.breedRepository.find();
+
+    return {
+      message: 'Lista de razas obtenida',
+      data
+    };
   }
 
   async findOne(id_raza: string) {
@@ -31,30 +44,49 @@ export class BreedsService {
     const breed = await this.breedRepository.findOneBy({ id_raza });
 
     if (!breed) {
-      throw new NotFoundException(`Breed with id ${id_raza} not found`);
+      throw new NotFoundException(`Raza con id ${id_raza} no encontrada`);
     }
 
-    return breed;
+    return {
+      message: 'Raza encontrada',
+      data: breed
+    };
   }
 
-  async update(id_raza: string, updateBreedDto: UpdateBreedDto) {
+  async update(id_raza: string, dto: UpdateBreedDto) {
 
-    const breed = await this.findOne(id_raza);
+    const breed = await this.breedRepository.findOneBy({ id_raza });
 
-    Object.assign(breed, updateBreedDto);
+    if (!breed) {
+      throw new NotFoundException(`Raza con id ${id_raza} no encontrada`);
+    }
 
-    return await this.breedRepository.save(breed);
+    Object.assign(breed, dto);
 
+    const updated = await this.breedRepository.save(breed);
+
+    this.logger.log(`Raza actualizada: ${id_raza}`);
+
+    return {
+      message: 'Raza actualizada correctamente',
+      data: updated
+    };
   }
 
   async remove(id_raza: string) {
 
-    const breed = await this.findOne(id_raza);
+    const breed = await this.breedRepository.findOneBy({ id_raza });
+
+    if (!breed) {
+      throw new NotFoundException(`Raza con id ${id_raza} no encontrada`);
+    }
 
     await this.breedRepository.remove(breed);
 
-    return { message: 'Breed deleted successfully' };
+    this.logger.warn(`Raza eliminada: ${id_raza}`);
 
+    return {
+      message: 'Raza eliminada correctamente'
+    };
   }
-
 }

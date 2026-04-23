@@ -9,8 +9,8 @@ export class BarnsController {
   constructor(private readonly barnsService: BarnsService) {}
 
   @Post()
-  create(@Body() createBarnDto: CreateBarnDto) {
-    return this.barnsService.create(createBarnDto);
+  create(@Body() dto: CreateBarnDto) {
+    return this.barnsService.create(dto);
   }
 
   @Get()
@@ -24,16 +24,12 @@ export class BarnsController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateBarnDto: UpdateBarnDto,
-  ) {
-    return this.barnsService.update(id, updateBarnDto);
+  update(@Param('id') id: string, @Body() dto: UpdateBarnDto) {
+    return this.barnsService.update(id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.barnsService.remove(id);
   }
-
 }

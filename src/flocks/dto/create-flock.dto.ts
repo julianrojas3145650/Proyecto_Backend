@@ -3,20 +3,20 @@ import { IsString, IsNumber, IsUUID } from "class-validator";
 export class CreateFlockDto {
 
   @IsString()
-  nombre: string;
+  nombre!: string;
 
   @IsNumber()
 
-  total_aves: number;
+  total_aves!: number;
 
   @IsUUID()
-  razaId: string;
+  razaId!: string;
 
   @IsString()
-  observacion: string;
+  observacion!: string;
 
   @IsString()
 
-  racion_alimento: string;
+  racion_alimento!: string;
 
 }
