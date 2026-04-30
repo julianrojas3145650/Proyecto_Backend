@@ -5,13 +5,13 @@ import { Flock } from './flock.entity';
 export class FlockStatus {
 
   @PrimaryGeneratedColumn('uuid')
-  id_estado_lote: string;
+  id_estado_lote!: string;
 
   @Column()
-  estado: string;
+  estado!: string;
 
   @ManyToOne(() => Flock, flock => flock.ubicacion)
   @JoinColumn({ name: 'id_lote' })
-  lote: Flock;
+  lote!: Flock;
 
 }

@@ -4,5 +4,5 @@ export class CreateSupplyCategoryDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
-  nombre_categoria: string;
+  nombre_categoria!: string;
 }

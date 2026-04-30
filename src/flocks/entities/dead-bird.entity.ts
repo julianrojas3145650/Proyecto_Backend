@@ -5,19 +5,19 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, Up
 export class DeadBird {
 
   @PrimaryGeneratedColumn('uuid')
-  id_aves_fallecidas: string;
+  id_aves_fallecidas!: string;
 
   @Column()
-  cantidad: number;
+  cantidad!: number;
 
   @ManyToOne(() => Flock, flock => flock.ubicacion)
   @JoinColumn({ name: 'id_lote' })
-  lote: Flock;
+  lote!: Flock;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 
 }

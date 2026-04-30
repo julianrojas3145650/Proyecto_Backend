@@ -10,25 +10,25 @@ import { EggType } from '../../egg-types/entities/egg-type.entity';
 export class EggInventory {
 
   @PrimaryGeneratedColumn('uuid')
-  id_inventario_huevo: string;
+  id_inventario_huevo!: string;
 
   @ManyToOne(() => EggType)
   @JoinColumn({ name: 'tipo_huevo_id' })
-  tipo_huevo: EggType;
+  tipo_huevo!: EggType;
 
   @ManyToOne(() => Flock, flock => flock.inventario_huevo)
-  lote: Flock;
+  lote!: Flock;
 
   @ManyToOne(() => EggProduction, production => production.inventories)
-  produccion: EggProduction;
+  produccion!: EggProduction;
 
   @Column()
-  cantidad: number;
+  cantidad!: number;
 
   @OneToMany(() => DamagedEgg, damaged => damaged.inventario)
-  damagedEggs: DamagedEgg[];
+  damagedEggs!: DamagedEgg[];
 
   @OneToMany(() => EggHistory, history => history.inventario)
-  history: EggHistory[];
+  history!: EggHistory[];
 
 }

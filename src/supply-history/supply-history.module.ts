@@ -4,7 +4,7 @@ import { SupplyHistoryService } from './supply-history.service';
 import { SupplyHistoryController } from './supply-history.controller';
 import { SupplyHistory } from './entities/supply-history.entity';
 import { Supply } from '../supplies/entities/supply.entity';
-import { SupplyAction } from 'src/supply-actions/entities/supply-action.entity';
+import { SupplyAction } from '../supply-actions/entities/supply-action.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([SupplyHistory, Supply, SupplyAction])],

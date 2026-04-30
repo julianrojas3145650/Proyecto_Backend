@@ -6,30 +6,30 @@ import { FlockAssignmentHistory } from '../../flocks/entities/flock-assignment-h
 export class Barn {
 
   @PrimaryGeneratedColumn('uuid')
-  id_galpon: string;
+  id_galpon!: string;
 
   @Column()
-  codigo: string;
+  codigo!: string;
 
   @Column()
-  nombre: string;
+  nombre!: string;
 
   @Column()
-  capacidad_max_aves: number;
+  capacidad_max_aves!: number;
 
   @Column('decimal')
-  longitud: number;
+  longitud!: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @OneToMany(() => FlockLocation, location => location.galpon)
-  ubicacion_lote: FlockLocation[];
+  ubicacion_lote!: FlockLocation[];
 
   @OneToMany(() => FlockAssignmentHistory, history => history.galpon)
-  asignacion_historial: FlockAssignmentHistory[];
+  asignacion_historial!: FlockAssignmentHistory[];
 
 }

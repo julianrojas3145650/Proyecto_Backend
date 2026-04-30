@@ -7,21 +7,21 @@ import { Supply } from '../../supplies/entities/supply.entity';
 export class Feeding {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_alimentacion' })
-  id_alimentacion: string;
+  id_alimentacion!: string;
 
   @ManyToOne(() => User)
-  usuario: User;
+  usuario!: User;
 
   @ManyToOne(() => Flock)
-  lote: Flock;
+  lote!: Flock;
 
   @ManyToOne(() => Supply)
-  insumo: Supply;
+  insumo!: Supply;
 
   @Column('decimal', { name: 'cantidad' })
-  cantidad: number;
+  cantidad!: number;
 
   @CreateDateColumn({ name: 'fecha' })
-  fecha: Date;
+  fecha!: Date;
 
 }

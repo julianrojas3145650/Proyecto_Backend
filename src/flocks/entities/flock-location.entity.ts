@@ -6,17 +6,17 @@ import { Barn } from '../../barns/entities/barn.entity';
 export class FlockLocation {
 
   @PrimaryGeneratedColumn('uuid')
-  id_ubicacion_lote: string;
+  id_ubicacion_lote!: string;
 
   @ManyToOne(() => Flock, flock => flock.ubicacion)
   @JoinColumn({ name: 'id_lote' })
-  lote: Flock;
+  lote!: Flock;
 
   @ManyToOne(() => Barn, barn => barn.ubicacion_lote)
   @JoinColumn({ name: 'id_galpon' })
-  galpon: Barn;
+  galpon!: Barn;
   
   @CreateDateColumn()
-  Fecha: Date;
+  Fecha!: Date;
 
 }

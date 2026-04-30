@@ -5,12 +5,12 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 export class Report {
 
   @PrimaryGeneratedColumn('uuid')
-  id_reporte: string;
+  id_reporte!: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'id_usuario' })
-  usuario: User;
+  usuario!: User;
 
   @Column()
-  tipo_reporte: string;
+  tipo_reporte!: string;
 }

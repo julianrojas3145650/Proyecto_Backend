@@ -8,7 +8,7 @@ import { FlockStatus } from './entities/flock-status.entity';
 import { FlockAssignmentHistory } from './entities/flock-assignment-history.entity';
 import { FinishedFlock } from './entities/finished-flock.entity';
 import { DeadBird } from './entities/dead-bird.entity';
-import { Breed } from 'src/breeds/entities/breed.entity';
+import { Breed } from '../breeds/entities/breed.entity';
 
 @Module({
   imports: [

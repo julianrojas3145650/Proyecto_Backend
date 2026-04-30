@@ -5,19 +5,19 @@ import { Flock } from './flock.entity';
 export class FinishedFlock {
 
   @PrimaryGeneratedColumn('uuid')
-  id_finalizacion_lote: string;
+  id_finalizacion_lote!: string;
 
   @Column()
-  cantidad: number;
+  cantidad!: number;
 
   @Column()
-  razon: string;
+  razon!: string;
 
   @CreateDateColumn()
-  fecha: Date;
+  fecha!: Date;
 
   @ManyToOne(() => Flock, flock => flock.ubicacion)
   @JoinColumn({ name: 'id_lote' })
-  lote: Flock;
+  lote!: Flock;
 
 }

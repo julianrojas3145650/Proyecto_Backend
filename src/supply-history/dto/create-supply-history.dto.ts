@@ -3,21 +3,21 @@ import { IsDateString, IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength, Is
 export class CreateSupplyHistoryDto {
   
   @IsUUID()
-  id_insumos: string;
+  id_insumos!: string;
 
   @IsInt()
   @IsPositive()
-  id_historial_accion: string;
+  id_historial_accion!: string;
 
   @IsNumber()
   @IsPositive()
-  cantidad: number;
+  cantidad!: number;
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
-  descripcion: string;
+  descripcion!: string;
 
   @IsDateString()
-  fecha: string;
+  fecha!: string;
 }

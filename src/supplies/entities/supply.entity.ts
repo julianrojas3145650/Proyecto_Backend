@@ -8,41 +8,41 @@ import { Feeding } from '../../feeding/entities/feeding.entity';
 @Entity('insumo')
 export class Supply {
   @PrimaryGeneratedColumn('uuid')
-  id_insumo: string;
+  id_insumo!: string;
 
   @ManyToOne(() => SupplyCategory, (cat) => cat.insumos)
   @JoinColumn({ name: 'id_categoria' })
-  categoria: SupplyCategory;
+  categoria!: SupplyCategory;
 
   @Column()
-  id_categoria: number;
+  id_categoria!: number;
 
   @ManyToOne(() => MeasurementUnit, (unit) => unit.insumos)
   @JoinColumn({ name: 'id_unidad_medida' })
-  unidadMedida: MeasurementUnit;
+  unidadMedida!: MeasurementUnit;
 
   @Column()
-  id_unidad_medida: number;
+  id_unidad_medida!: number;
 
   @ManyToOne(() => CallUser, (lu) => lu.insumos)
   @JoinColumn({ name: 'id_llamar_usuario' })
-  llamarUsuario: CallUser;
+  llamarUsuario!: CallUser;
   
   @Column()
-  id_llamar_usuario: number;
+  id_llamar_usuario!: number;
 
   @Column({ type: 'varchar', length: 255 })
-  nombre: string;
+  nombre!: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  cantidad: number;
+  cantidad!: number;
 
   @Column({ type: 'timestamp' })
-  fecha: Date;
+  fecha!: Date;
 
   @OneToMany(() => SupplyHistory, (hist) => hist.insumo)
-  historial: SupplyHistory[];
+  historial!: SupplyHistory[];
 
   @OneToMany(() => Feeding, (ali) => ali.insumo)
-  alimentaciones: Feeding[];
+  alimentaciones!: Feeding[];
 }

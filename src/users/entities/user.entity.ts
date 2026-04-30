@@ -5,35 +5,32 @@ import { UserRole } from '../../roles/entities/user-role.entity';
 @Entity('usuario')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id_usuario: string;
+  id_usuario!: string;
 
   @Column({ length: 255 })
-  nombre: string;
+  nombre!: string;
 
   @Column({ length: 255 })
-  apellido: string;
-
-  @Column({ length: 255 })
-  documento: string;
+  documento!: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  fecha_creacion: Date;
+  fecha_creacion!: Date;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  ultimo_acceso: Date;
+  ultimo_acceso!: Date;
 
   @Column({ length: 255, unique: true })
-  email: string;
+  email!: string;
 
   @Column({ length: 255 })
-  password: string;
+  password!: string;
 
   @Column({ default: true })
-  activo: boolean;
+  activo!: boolean;
 
   @OneToMany(() => CallUser, (llamar) => llamar.usuario)
-  llamarUsuarios: CallUser[];
+  llamarUsuarios!: CallUser[];
 
   @OneToMany(() => UserRole, (usuarioRol) => usuarioRol.usuario)
-  usuarioRoles: UserRole[];
+  usuarioRoles!: UserRole[];
 }

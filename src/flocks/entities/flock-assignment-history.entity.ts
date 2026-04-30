@@ -6,17 +6,17 @@ import { Barn } from '../../barns/entities/barn.entity';
 export class FlockAssignmentHistory {
 
   @PrimaryGeneratedColumn('uuid')
-  id_historial_asignacion_lote: string;
+  id_historial_asignacion_lote!: string;
 
   @Column()
-  cantidad_asignada: number;
+  cantidad_asignada!: number;
 
   @ManyToOne(() => Flock, flock => flock.ubicacion)
   @JoinColumn({ name: 'id_lote' })
-  lote: Flock;
+  lote!: Flock;
 
   @ManyToOne(() => Barn, barn => barn.ubicacion_lote)
   @JoinColumn({ name: 'id_galpon' })
-  galpon: Barn;
+  galpon!: Barn;
 
 }

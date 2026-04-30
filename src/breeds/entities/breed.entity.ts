@@ -4,11 +4,11 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class Breed {
 
   @PrimaryGeneratedColumn('uuid')
-  id_raza: string;
+  id_raza!: string;
 
   @Column({ length: 255 })
-  nombre: string;
+  nombre!: string;
 
   @Column({ length: 255 })
-  descripcion: string;
+  descripcion!: string;
 }

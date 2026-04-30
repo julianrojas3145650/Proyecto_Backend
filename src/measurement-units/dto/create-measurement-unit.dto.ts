@@ -4,10 +4,10 @@ export class CreateMeasurementUnitDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
-  nombre: string;
+  nombre!: string;
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
-  abreviatura: string;
+  abreviatura!: string;
 }

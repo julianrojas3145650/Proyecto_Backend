@@ -5,28 +5,28 @@ import { SupplyAction } from '../../supply-actions/entities/supply-action.entity
 @Entity('historial_insumo')
 export class SupplyHistory {
   @PrimaryGeneratedColumn('uuid')
-  id_historial_insumo: string;
+  id_historial_insumo!: string;
 
   @Column()
-  id_insumos: string;
+  id_insumos!: string;
 
   @Column()
-  id_historial_accion: number;
+  id_historial_accion!: number;
 
   @Column({ type: 'float' })
-  cantidad: number;
+  cantidad!: number;
 
   @Column({ type: 'varchar', length: 255 })
-  descripcion: string;
+  descripcion!: string;
 
   @Column({ type: 'timestamp' })
-  fecha: Date;
+  fecha!: Date;
 
   @ManyToOne(() => Supply, (insumo) => insumo.historial)
   @JoinColumn({ name: 'id_insumos' })
-  insumo: Supply;
+  insumo!: Supply;
 
   @ManyToOne(() => SupplyAction, (action) => action.historial)
   @JoinColumn({ name: 'id_historial_accion' })
-  accion: SupplyAction;
+  accion!: SupplyAction;
 }

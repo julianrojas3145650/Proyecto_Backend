@@ -3,23 +3,23 @@ import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
-  nombre: string;
+  nombre!: string;
 
   @IsString()
   @IsNotEmpty()
-  apellido: string;
+  apellido!: string;
 
   @IsString()
   @IsNotEmpty()
-  documento: string;
+  documento!: string;
 
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 
   @IsBoolean()
   @IsOptional()

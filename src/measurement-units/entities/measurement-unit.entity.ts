@@ -4,14 +4,14 @@ import { Supply } from '../../supplies/entities/supply.entity';
 @Entity('unidad_medida')
 export class MeasurementUnit {
   @PrimaryGeneratedColumn('uuid')
-  id_unidad_medida: string;
+  id_unidad_medida!: string;
 
   @Column({ type: 'varchar', length: 255 })
-  nombre: string;
+  nombre!: string;
 
   @Column({ type: 'varchar', length: 255 })
-  abreviatura: string;
+  abreviatura!: string;
 
   @OneToMany(() => Supply, (insumo) => insumo.unidadMedida)
-  insumos: Supply[];
+  insumos!: Supply[];
 }

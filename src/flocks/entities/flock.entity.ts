@@ -9,36 +9,36 @@ import { EggInventory } from '../../egg-inventory/entities/egg-inventory.entity'
 export class Flock {
 
     @PrimaryGeneratedColumn('uuid')
-    id_lote: string;
+    id_lote!: string;
 
     @Column()
-    nombre: string;
+    nombre!: string;
 
     @Column()
-    total_aves: number;
+    total_aves!: number;
 
     @Column()
-    observacion: string;
+    observacion!: string;
 
     @Column()
-    racion_alimento: string;
+    racion_alimento!: string;
 
     @Column()
-    estado: string;
+    estado!: string;
 
     @ManyToOne(() => Breed)
     @JoinColumn({ name: 'id_raza' })
-    raza: Breed;
+    raza!: Breed;
 
     @OneToMany(() => FlockLocation, location => location.lote)
-    ubicacion: FlockLocation[];
+    ubicacion!: FlockLocation[];
 
     @OneToMany(() => FlockStatus, status => status.lote)
-    estados: FlockStatus[];
+    estados!: FlockStatus[];
 
     @OneToMany(() => EggProduction, production => production.lote)
-    produccion_huevo: EggProduction[];
+    produccion_huevo!: EggProduction[];
 
     @OneToMany(() => EggInventory, inventory => inventory.lote)
-    inventario_huevo: EggInventory[];
+    inventario_huevo!: EggInventory[];
 }

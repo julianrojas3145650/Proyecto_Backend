@@ -3,25 +3,25 @@ import {IsDateString, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString, MaxLeng
 export class CreateSupplyDto {
   @IsInt()
   @IsPositive()
-  id_categoria: number;
+  id_categoria!: number;
 
   @IsInt()
   @IsPositive()
-  id_unidad_medida: number;
+  id_unidad_medida!: number;
 
   @IsInt()
   @IsPositive()
-  id_llamar_usuario: number;
+  id_llamar_usuario!: number;
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
-  nombre: string;
+  nombre!: string;
 
   @IsNumber()
   @Min(0)
-  cantidad: number;
+  cantidad!: number;
 
   @IsDateString()
-  fecha: string;
+  fecha!: string;
 }

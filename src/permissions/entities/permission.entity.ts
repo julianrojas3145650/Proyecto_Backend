@@ -4,14 +4,14 @@ import { RolePermission } from './role-permission.entity';
 @Entity('permiso')
 export class Permission {
   @PrimaryGeneratedColumn()
-  id_permiso: number;
+  id_permiso!: number;
 
   @Column()
-  codigo: number;
+  codigo!: number;
 
   @Column({ length: 255 })
-  descripcion: string;
+  descripcion!: string;
 
   @OneToMany(() => RolePermission, (rp) => rp.permiso)
-  rolPermisos: RolePermission[];
+  rolPermisos!: RolePermission[];
 }
