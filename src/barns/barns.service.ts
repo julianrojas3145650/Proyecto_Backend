@@ -32,7 +32,7 @@ export class BarnsService {
   async findAll() {
 
     const data = await this.barnRepository.find({
-      relations: ['flockLocations', 'assignmentHistory']
+      relations: ['ubicacion_lote', 'asignacion_historial']
     });
 
     return {

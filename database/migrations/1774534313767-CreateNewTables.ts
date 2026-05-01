@@ -118,5 +118,4 @@ export class CreateNewTables1774534313767 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "unidad_medida"`);
         await queryRunner.query(`DROP TABLE "categoria_insumo"`);
     }
-
 }
