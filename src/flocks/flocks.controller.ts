@@ -7,7 +7,7 @@ import { RegisterDeadBirdsDto } from './dto/register-dead-birds.dto';
 import { FinishFlockDto } from './dto/finish-flock.dto';
 import { AssignFlockDto } from './dto/assign-flock.dto';
 
-@Controller('Flocks')
+@Controller('flocks')
 export class FlocksController {
 
   constructor(private readonly flocksService: FlocksService) {}
