@@ -15,37 +15,29 @@ export class AuthService {
   ) {}
 
   async login(dto: LoginDto): Promise<{ access_token: string; usuario: any }> {
-    this.logger.log(`Intentando login para el correo: ${dto.email}`);
+    this.logger.log(`Intentando login para el documento: ${dto.documento}`);
 
-    // 1. Buscar el usuario
-    const usuario = await this.usersService.findByEmail(dto.email);
+    // 1. Buscar el usuario por documento
+    const usuario = await this.usersService.findByDocumento(dto.documento);
 
     if (!usuario) {
-      this.logger.error(`Usuario no encontrado: ${dto.email}`);
+      this.logger.error(`Usuario no encontrado con documento: ${dto.documento}`);
       throw new UnauthorizedException('Credenciales inválidas');
     }
 
     // 2. Verificar si está activo
     if (!usuario.activo) {
-      this.logger.warn(`Intento de entrada con usuario inactivo: ${dto.email}`);
+      this.logger.warn(`Intento de entrada con usuario inactivo: ${dto.documento}`);
       throw new UnauthorizedException('Usuario inactivo. Contacte al administrador');
     }
 
-    // 3. Comparación de contraseñas con LOG DE EMERGENCIA
-    /** const passwordMatch = await bcrypt.compare(dto.password, usuario.password);
-
-    !const hashDePrueba = await bcrypt.hash("Password123", 10);
-    this.logger.debug(`PARA LA BD USA ESTE: ${hashDePrueba}`);
-
-    this.logger.debug('--- DEBUG DE EMERGENCIA ---');
-    this.logger.debug(`Password enviado en Postman: ${dto.password}`);
-    this.logger.debug(`Hash leído de la BD: [${usuario.password}]`); 
-    this.logger.debug(`¿Coinciden según bcrypt?: ${passwordMatch}`);
+    // 3. Comparación de contraseñas
+    const passwordMatch = await bcrypt.compare(dto.password, usuario.password);
 
     if (!passwordMatch) {
       this.logger.error('La contraseña no coincide');
       throw new UnauthorizedException('Credenciales inválidas');
-    } */
+    }
 
     // 4. Actualizar último acceso
     try {
@@ -66,7 +58,7 @@ export class AuthService {
 
     const { password, ...usuarioSinPassword } = usuario;
 
-    this.logger.log(`Login exitoso: ${dto.email}`);
+    this.logger.log(`Login exitoso para documento: ${dto.documento}`);
 
     return {
       access_token: this.jwtService.sign(payload),

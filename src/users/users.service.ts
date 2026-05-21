@@ -71,6 +71,13 @@ export class UsersService {
     });
   }
 
+  async findByDocumento(documento: string): Promise<User | null> {
+    return this.usuarioRepo.findOne({
+      where: { documento },
+      relations: ['usuarioRoles', 'usuarioRoles.rol', 'usuarioRoles.rol.rolPermisos', 'usuarioRoles.rol.rolPermisos.permiso'],
+    });
+  }
+
   async update(
     id: string,
     dto: UpdateUserDto,
