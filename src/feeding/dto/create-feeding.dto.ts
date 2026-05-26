@@ -1,7 +1,6 @@
-import { IsUUID, IsNumber } from "class-validator";
+import { IsUUID, IsNumber } from 'class-validator';
 
 export class CreateFeedingDto {
-
   @IsUUID()
   id_usuario!: string;
 
@@ -13,5 +12,4 @@ export class CreateFeedingDto {
 
   @IsNumber()
   cantidad!: number;
-
 }

@@ -8,15 +8,8 @@ import { Flock } from '../flocks/entities/flock.entity';
 import { Supply } from '../supplies/entities/supply.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      Feeding,
-      User,
-      Flock,
-      Supply
-    ])
-  ],
+  imports: [TypeOrmModule.forFeature([Feeding, User, Flock, Supply])],
   controllers: [FeedingController],
   providers: [FeedingService],
 })
-export class FeedingModule { }
+export class FeedingModule {}

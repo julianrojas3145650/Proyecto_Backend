@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SupplyCategory } from './entities/supply-category.entity';
@@ -40,7 +44,10 @@ export class SupplyCategoriesService {
     return category;
   }
 
-  async update(id: string, dto: UpdateSupplyCategoryDto): Promise<SupplyCategory> {
+  async update(
+    id: string,
+    dto: UpdateSupplyCategoryDto,
+  ): Promise<SupplyCategory> {
     const category = await this.findOne(id);
     Object.assign(category, dto);
     return this.supplyCategoryRepository.save(category);

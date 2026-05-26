@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -67,7 +71,12 @@ export class UsersService {
   async findByEmail(email: string): Promise<User | null> {
     return this.usuarioRepo.findOne({
       where: { email },
-      relations: ['usuarioRoles', 'usuarioRoles.rol', 'usuarioRoles.rol.rolPermisos', 'usuarioRoles.rol.rolPermisos.permiso'],
+      relations: [
+        'usuarioRoles',
+        'usuarioRoles.rol',
+        'usuarioRoles.rol.rolPermisos',
+        'usuarioRoles.rol.rolPermisos.permiso',
+      ],
     });
   }
 
@@ -112,11 +121,17 @@ export class UsersService {
 
   // Método utilitario para obtener o crear llamar_usuario por usuario
   async getLlamarUsuario(id_usuario: string): Promise<CallUser> {
-    let llamar = await this.llamarUsuarioRepo.findOne({ where: { id_usuario } });
+    let llamar = await this.llamarUsuarioRepo.findOne({
+      where: { id_usuario },
+    });
     if (!llamar) {
       const now = new Date();
       llamar = await this.llamarUsuarioRepo.save(
-        this.llamarUsuarioRepo.create({ id_usuario, fecha_creacion: now, fecha_modificacion: now }),
+        this.llamarUsuarioRepo.create({
+          id_usuario,
+          fecha_creacion: now,
+          fecha_modificacion: now,
+        }),
       );
     }
     return llamar;

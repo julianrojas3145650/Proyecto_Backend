@@ -9,7 +9,6 @@ import { AssignFlockDto } from './dto/assign-flock.dto';
 
 @Controller('flocks')
 export class FlocksController {
-
   constructor(private readonly flocksService: FlocksService) {}
 
   @Post()

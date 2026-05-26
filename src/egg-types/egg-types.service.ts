@@ -7,7 +7,6 @@ import { UpdateEggTypeDto } from './dto/update-egg-type.dto';
 
 @Injectable()
 export class EggTypesService {
-
   constructor(
     @InjectRepository(EggType)
     private readonly eggTypeRepository: Repository<EggType>,
@@ -22,10 +21,9 @@ export class EggTypesService {
     return this.eggTypeRepository.find();
   }
 
-
   findOne(id: string) {
     return this.eggTypeRepository.findOne({
-      where: { id_tipo: id }
+      where: { id_tipo: id },
     });
   }
 

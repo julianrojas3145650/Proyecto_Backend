@@ -1,7 +1,15 @@
-import { IsDateString, IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength, IsUUID, IsInt } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  MaxLength,
+  IsUUID,
+  IsInt,
+} from 'class-validator';
 
 export class CreateSupplyHistoryDto {
-  
   @IsUUID()
   id_insumos!: string;
 

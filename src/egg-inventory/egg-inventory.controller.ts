@@ -6,7 +6,6 @@ import { RegisterDamagedEggsDto } from './dto/register-damaged-eggs.dto';
 
 @Controller('egg-inventory')
 export class EggInventoryController {
-
   constructor(private readonly service: EggInventoryService) {}
 
   @Post('produccion')

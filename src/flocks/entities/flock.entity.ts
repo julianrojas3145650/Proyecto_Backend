@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Breed } from '../../breeds/entities/breed.entity';
 import { FlockLocation } from './flock-location.entity';
 import { FlockStatus } from './flock-status.entity';
@@ -7,38 +14,37 @@ import { EggInventory } from '../../egg-inventory/entities/egg-inventory.entity'
 
 @Entity('lote')
 export class Flock {
+  @PrimaryGeneratedColumn('uuid')
+  id_lote!: string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id_lote!: string;
+  @Column()
+  nombre!: string;
 
-    @Column()
-    nombre!: string;
+  @Column()
+  total_aves!: number;
 
-    @Column()
-    total_aves!: number;
+  @Column()
+  observacion!: string;
 
-    @Column()
-    observacion!: string;
+  @Column()
+  racion_alimento!: string;
 
-    @Column()
-    racion_alimento!: string;
+  @Column()
+  estado!: string;
 
-    @Column()
-    estado!: string;
+  @ManyToOne(() => Breed)
+  @JoinColumn({ name: 'id_raza' })
+  raza!: Breed;
 
-    @ManyToOne(() => Breed)
-    @JoinColumn({ name: 'id_raza' })
-    raza!: Breed;
+  @OneToMany(() => FlockLocation, (location) => location.lote)
+  ubicacion!: FlockLocation[];
 
-    @OneToMany(() => FlockLocation, location => location.lote)
-    ubicacion!: FlockLocation[];
+  @OneToMany(() => FlockStatus, (status) => status.lote)
+  estados!: FlockStatus[];
 
-    @OneToMany(() => FlockStatus, status => status.lote)
-    estados!: FlockStatus[];
+  @OneToMany(() => EggProduction, (production) => production.lote)
+  produccion_huevo!: EggProduction[];
 
-    @OneToMany(() => EggProduction, production => production.lote)
-    produccion_huevo!: EggProduction[];
-
-    @OneToMany(() => EggInventory, inventory => inventory.lote)
-    inventario_huevo!: EggInventory[];
+  @OneToMany(() => EggInventory, (inventory) => inventory.lote)
+  inventario_huevo!: EggInventory[];
 }

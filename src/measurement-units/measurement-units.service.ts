@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MeasurementUnit } from './entities/measurement-unit.entity';
@@ -37,12 +41,17 @@ export class MeasurementUnitsService {
       relations: ['insumos'],
     });
     if (!unit) {
-      throw new NotFoundException(`Unidad de medida con ID ${id} no encontrada`);
+      throw new NotFoundException(
+        `Unidad de medida con ID ${id} no encontrada`,
+      );
     }
     return unit;
   }
 
-  async update(id: string, dto: UpdateMeasurementUnitDto): Promise<MeasurementUnit> {
+  async update(
+    id: string,
+    dto: UpdateMeasurementUnitDto,
+  ): Promise<MeasurementUnit> {
     const unit = await this.findOne(id);
     Object.assign(unit, dto);
     return this.measurementUnitRepository.save(unit);

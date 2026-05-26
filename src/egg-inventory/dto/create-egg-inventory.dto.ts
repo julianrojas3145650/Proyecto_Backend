@@ -1,7 +1,6 @@
-import { IsUUID, IsNumber } from "class-validator";
+import { IsUUID, IsNumber } from 'class-validator';
 
 export class CreateEggProductionDto {
-
   @IsUUID()
   loteId!: string;
 

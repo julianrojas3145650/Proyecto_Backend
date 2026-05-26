@@ -1,4 +1,13 @@
-import {IsDateString, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength, Min} from 'class-validator';
+import {
+  IsDateString,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  MaxLength,
+  Min,
+} from 'class-validator';
 
 export class CreateSupplyDto {
   @IsInt()

@@ -1,12 +1,10 @@
-import { IsString, IsNumber, IsUUID } from "class-validator";
+import { IsString, IsNumber, IsUUID } from 'class-validator';
 
 export class CreateFlockDto {
-
   @IsString()
   nombre!: string;
 
   @IsNumber()
-
   total_aves!: number;
 
   @IsUUID()
@@ -16,7 +14,5 @@ export class CreateFlockDto {
   observacion!: string;
 
   @IsString()
-
   racion_alimento!: string;
-
 }

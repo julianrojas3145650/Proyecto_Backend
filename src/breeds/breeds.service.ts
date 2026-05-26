@@ -8,7 +8,6 @@ import { UpdateBreedDto } from './dto/update-breed.dto';
 
 @Injectable()
 export class BreedsService {
-
   private readonly logger = new Logger(BreedsService.name);
 
   constructor(
@@ -17,7 +16,6 @@ export class BreedsService {
   ) {}
 
   async create(dto: CreateBreedDto) {
-
     const breed = this.breedRepository.create(dto);
     const saved = await this.breedRepository.save(breed);
 
@@ -25,22 +23,20 @@ export class BreedsService {
 
     return {
       message: 'Raza creada correctamente',
-      data: saved
+      data: saved,
     };
   }
 
   async findAll() {
-
     const data = await this.breedRepository.find();
 
     return {
       message: 'Lista de razas obtenida',
-      data
+      data,
     };
   }
 
   async findOne(id_raza: string) {
-
     const breed = await this.breedRepository.findOneBy({ id_raza });
 
     if (!breed) {
@@ -49,12 +45,11 @@ export class BreedsService {
 
     return {
       message: 'Raza encontrada',
-      data: breed
+      data: breed,
     };
   }
 
   async update(id_raza: string, dto: UpdateBreedDto) {
-
     const breed = await this.breedRepository.findOneBy({ id_raza });
 
     if (!breed) {
@@ -69,12 +64,11 @@ export class BreedsService {
 
     return {
       message: 'Raza actualizada correctamente',
-      data: updated
+      data: updated,
     };
   }
 
   async remove(id_raza: string) {
-
     const breed = await this.breedRepository.findOneBy({ id_raza });
 
     if (!breed) {
@@ -86,7 +80,7 @@ export class BreedsService {
     this.logger.warn(`Raza eliminada: ${id_raza}`);
 
     return {
-      message: 'Raza eliminada correctamente'
+      message: 'Raza eliminada correctamente',
     };
   }
 }

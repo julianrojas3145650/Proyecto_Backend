@@ -4,7 +4,6 @@ import { CreateFeedingDto } from './dto/create-feeding.dto';
 
 @Controller('alimentacion')
 export class FeedingController {
-
   constructor(private readonly service: FeedingService) {}
 
   @Post()
@@ -26,5 +25,4 @@ export class FeedingController {
   remove(@Param('id') id: string) {
     return this.service.remove(id);
   }
-
 }

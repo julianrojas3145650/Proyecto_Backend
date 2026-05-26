@@ -19,8 +19,8 @@ import { Breed } from '../breeds/entities/breed.entity';
       FlockAssignmentHistory,
       FinishedFlock,
       DeadBird,
-      Breed
-    ])
+      Breed,
+    ]),
   ],
   controllers: [FlocksController],
   providers: [FlocksService],

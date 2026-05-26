@@ -1,11 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BarnsService } from './barns.service';
 import { CreateBarnDto } from './dto/create-barn.dto';
 import { UpdateBarnDto } from './dto/update-barn.dto';
 
 @Controller('barns')
 export class BarnsController {
-
   constructor(private readonly barnsService: BarnsService) {}
 
   @Post()

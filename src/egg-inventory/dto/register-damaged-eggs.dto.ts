@@ -1,7 +1,6 @@
-import { IsUUID, IsNumber, IsString } from "class-validator";
+import { IsUUID, IsNumber, IsString } from 'class-validator';
 
 export class RegisterDamagedEggsDto {
-
   @IsUUID()
   inventarioId!: string;
 

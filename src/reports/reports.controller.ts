@@ -4,7 +4,6 @@ import { CreateReportDto } from './dto/create-report.dto';
 
 @Controller('reports')
 export class ReportsController {
-
   constructor(private readonly service: ReportsService) {}
 
   @Post()

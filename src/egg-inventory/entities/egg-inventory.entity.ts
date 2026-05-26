@@ -1,5 +1,11 @@
-
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Flock } from '../../flocks/entities/flock.entity';
 import { EggProduction } from './egg-production.entity';
 import { DamagedEgg } from './damaged-egg.entity';
@@ -8,7 +14,6 @@ import { EggType } from '../../egg-types/entities/egg-type.entity';
 
 @Entity('inventario_huevo')
 export class EggInventory {
-
   @PrimaryGeneratedColumn('uuid')
   id_inventario_huevo!: string;
 
@@ -16,19 +21,18 @@ export class EggInventory {
   @JoinColumn({ name: 'tipo_huevo_id' })
   tipo_huevo!: EggType;
 
-  @ManyToOne(() => Flock, flock => flock.inventario_huevo)
+  @ManyToOne(() => Flock, (flock) => flock.inventario_huevo)
   lote!: Flock;
 
-  @ManyToOne(() => EggProduction, production => production.inventories)
+  @ManyToOne(() => EggProduction, (production) => production.inventories)
   produccion!: EggProduction;
 
   @Column()
   cantidad!: number;
 
-  @OneToMany(() => DamagedEgg, damaged => damaged.inventario)
+  @OneToMany(() => DamagedEgg, (damaged) => damaged.inventario)
   damagedEggs!: DamagedEgg[];
 
-  @OneToMany(() => EggHistory, history => history.inventario)
+  @OneToMany(() => EggHistory, (history) => history.inventario)
   history!: EggHistory[];
-
 }

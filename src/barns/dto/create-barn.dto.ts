@@ -1,7 +1,6 @@
-import { IsString, IsNumber, MinLength } from "class-validator";
+import { IsString, IsNumber, MinLength } from 'class-validator';
 
 export class CreateBarnDto {
-
   @IsString()
   @MinLength(2)
   codigo!: string;

@@ -1,14 +1,12 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateEggTypeDto {
+  @IsString()
+  tipo!: string;
 
-    @IsString()
-    tipo!: string;
+  @IsNumber()
+  peso_min!: number;
 
-    @IsNumber()
-    peso_min!: number;
-
-    @IsNumber()
-    peso_max!: number;
-
+  @IsNumber()
+  peso_max!: number;
 }

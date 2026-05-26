@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EggTypesService } from './egg-types.service';
 import { CreateEggTypeDto } from './dto/create-egg-type.dto';
 import { UpdateEggTypeDto } from './dto/update-egg-type.dto';

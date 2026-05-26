@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SupplyAction } from './entities/supply-action.entity';
@@ -10,16 +14,14 @@ export class SupplyActionsService {
   constructor(
     @InjectRepository(SupplyAction)
     private readonly supplyActionRepository: Repository<SupplyAction>,
-  ) { }
+  ) {}
 
   async create(dto: CreateSupplyActionDto): Promise<SupplyAction> {
     const existing = await this.supplyActionRepository.findOne({
       where: { nombre: dto.nombre },
     });
     if (existing) {
-      throw new ConflictException(
-        `La acción "${dto.nombre}" ya existe`,
-      );
+      throw new ConflictException(`La acción "${dto.nombre}" ya existe`);
     }
     const action = this.supplyActionRepository.create(dto);
     return this.supplyActionRepository.save(action);
@@ -34,7 +36,9 @@ export class SupplyActionsService {
       where: { id_accion_historial_movimiento: id_accion_historial_movimiento },
     });
     if (!action) {
-      throw new NotFoundException(`Acción con ID ${id_accion_historial_movimiento} no encontrada`);
+      throw new NotFoundException(
+        `Acción con ID ${id_accion_historial_movimiento} no encontrada`,
+      );
     }
     return action;
   }
@@ -48,9 +52,7 @@ export class SupplyActionsService {
       });
 
       if (existing && existing.id_accion_historial_movimiento !== id) {
-        throw new ConflictException(
-          `La acción "${dto.nombre}" ya existe`,
-        );
+        throw new ConflictException(`La acción "${dto.nombre}" ya existe`);
       }
     }
 

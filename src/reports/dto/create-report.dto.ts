@@ -1,7 +1,6 @@
-import { IsUUID, IsString } from "class-validator";
+import { IsUUID, IsString } from 'class-validator';
 
 export class CreateReportDto {
-
   @IsUUID()
   id_usuario!: string;
 

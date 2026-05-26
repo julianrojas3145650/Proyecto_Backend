@@ -8,7 +8,6 @@ import { UpdateBarnDto } from './dto/update-barn.dto';
 
 @Injectable()
 export class BarnsService {
-
   private readonly logger = new Logger(BarnsService.name);
 
   constructor(
@@ -17,7 +16,6 @@ export class BarnsService {
   ) {}
 
   async create(dto: CreateBarnDto) {
-
     const barn = this.barnRepository.create(dto);
     const saved = await this.barnRepository.save(barn);
 
@@ -25,27 +23,25 @@ export class BarnsService {
 
     return {
       message: 'Galpón creado correctamente',
-      data: saved
+      data: saved,
     };
   }
 
   async findAll() {
-
     const data = await this.barnRepository.find({
-      relations: ['ubicacion_lote', 'asignacion_historial']
+      relations: ['ubicacion_lote', 'asignacion_historial'],
     });
 
     return {
       message: 'Lista de galpones obtenida',
-      data
+      data,
     };
   }
 
   async findOne(id_galpon: string) {
-
     const barn = await this.barnRepository.findOne({
       where: { id_galpon },
-      relations: ['flockLocations', 'assignmentHistory']
+      relations: ['flockLocations', 'assignmentHistory'],
     });
 
     if (!barn) {
@@ -54,12 +50,11 @@ export class BarnsService {
 
     return {
       message: 'Galpón encontrado',
-      data: barn
+      data: barn,
     };
   }
 
   async update(id_galpon: string, dto: UpdateBarnDto) {
-
     const barnResult = await this.barnRepository.findOneBy({ id_galpon });
 
     if (!barnResult) {
@@ -74,12 +69,11 @@ export class BarnsService {
 
     return {
       message: 'Galpón actualizado correctamente',
-      data: updated
+      data: updated,
     };
   }
 
   async remove(id_galpon: string) {
-
     const barnResult = await this.barnRepository.findOneBy({ id_galpon });
 
     if (!barnResult) {
@@ -91,7 +85,7 @@ export class BarnsService {
     this.logger.warn(`Galpón eliminado: ${id_galpon}`);
 
     return {
-      message: 'Galpón eliminado correctamente'
+      message: 'Galpón eliminado correctamente',
     };
   }
 }

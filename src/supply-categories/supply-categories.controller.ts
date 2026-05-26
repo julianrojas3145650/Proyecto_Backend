@@ -1,11 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { SupplyCategoriesService } from './supply-categories.service';
 import { CreateSupplyCategoryDto } from './dto/create-supply-category.dto';
 import { UpdateSupplyCategoryDto } from './dto/update-supply-category.dto';
 
 @Controller('supply-categories')
 export class SupplyCategoriesController {
-  constructor(private readonly supplyCategoriesService: SupplyCategoriesService) {}
+  constructor(
+    private readonly supplyCategoriesService: SupplyCategoriesService,
+  ) {}
 
   @Post()
   create(@Body() dto: CreateSupplyCategoryDto) {

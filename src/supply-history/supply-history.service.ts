@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { SupplyHistory } from './entities/supply-history.entity';
@@ -23,11 +27,10 @@ export class SupplyHistoryService {
     private readonly actionRepository: Repository<SupplyAction>,
 
     private readonly dataSource: DataSource,
-  ) { }
+  ) {}
 
   async create(dto: CreateSupplyHistoryDto): Promise<SupplyHistory> {
     return this.dataSource.transaction(async (manager) => {
-
       // 1. Buscar insumo (UUID correcto)
       const insumo = await manager.findOne(Supply, {
         where: { id_insumo: dto.id_insumos },
@@ -113,7 +116,10 @@ export class SupplyHistoryService {
     return history;
   }
 
-  async update(id: string, dto: UpdateSupplyHistoryDto): Promise<SupplyHistory> {
+  async update(
+    id: string,
+    dto: UpdateSupplyHistoryDto,
+  ): Promise<SupplyHistory> {
     const history = await this.findOne(id);
 
     const updated = Object.assign(history, {

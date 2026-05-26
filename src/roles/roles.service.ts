@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from './entities/role.entity';
@@ -16,13 +20,17 @@ export class RolesService {
   ) {}
 
   async create(dto: CreateRoleDto): Promise<Role> {
-    const existe = await this.rolRepo.findOne({ where: { nombre: dto.nombre } });
+    const existe = await this.rolRepo.findOne({
+      where: { nombre: dto.nombre },
+    });
     if (existe) throw new BadRequestException(`Rol "${dto.nombre}" ya existe`);
     return this.rolRepo.save(this.rolRepo.create(dto));
   }
 
   async findAll(): Promise<Role[]> {
-    return this.rolRepo.find({ relations: ['rolPermisos', 'rolPermisos.permiso'] });
+    return this.rolRepo.find({
+      relations: ['rolPermisos', 'rolPermisos.permiso'],
+    });
   }
 
   async findOne(id: number): Promise<Role> {
@@ -49,11 +57,10 @@ export class RolesService {
     const existe = await this.usuarioRolRepo.findOne({
       where: { id_usuario: dto.id_usuario, id_rol: dto.id_rol },
     });
-    if (existe) throw new BadRequestException('El usuario ya tiene este rol asignado');
+    if (existe)
+      throw new BadRequestException('El usuario ya tiene este rol asignado');
 
-    return this.usuarioRolRepo.save(
-      this.usuarioRolRepo.create(dto),
-    );
+    return this.usuarioRolRepo.save(this.usuarioRolRepo.create(dto));
   }
 
   async removeRolFromUser(dto: AssignRoleDto): Promise<{ message: string }> {

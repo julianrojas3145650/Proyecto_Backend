@@ -13,8 +13,8 @@ import { EggHistory } from './entities/egg-history.entity';
       EggInventory,
       EggProduction,
       DamagedEgg,
-      EggHistory
-    ])
+      EggHistory,
+    ]),
   ],
   controllers: [EggInventoryController],
   providers: [EggInventoryService],

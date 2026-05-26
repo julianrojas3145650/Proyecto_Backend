@@ -1,7 +1,6 @@
-import { IsUUID, IsNumber, IsString } from "class-validator";
+import { IsUUID, IsNumber, IsString } from 'class-validator';
 
 export class FinishFlockDto {
-
   @IsUUID()
   loteId!: string;
 
@@ -10,5 +9,4 @@ export class FinishFlockDto {
 
   @IsString()
   razon!: string;
-
 }

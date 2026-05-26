@@ -51,7 +51,7 @@ import { AuthModule } from './auth/auth.module';
     SupplyHistoryModule,
     SupplyActionsModule,
     AuthModule,
-    FeedingModule
+    FeedingModule,
   ],
   controllers: [],
   providers: [],

@@ -1,9 +1,14 @@
 import { User } from '../../users/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('reporte')
 export class Report {
-
   @PrimaryGeneratedColumn('uuid')
   id_reporte!: string;
 

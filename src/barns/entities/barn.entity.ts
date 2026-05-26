@@ -1,10 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { FlockLocation } from '../../flocks/entities/flock-location.entity';
 import { FlockAssignmentHistory } from '../../flocks/entities/flock-assignment-history.entity';
 
 @Entity('galpon')
 export class Barn {
-
   @PrimaryGeneratedColumn('uuid')
   id_galpon!: string;
 
@@ -26,10 +32,9 @@ export class Barn {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToMany(() => FlockLocation, location => location.galpon)
+  @OneToMany(() => FlockLocation, (location) => location.galpon)
   ubicacion_lote!: FlockLocation[];
 
-  @OneToMany(() => FlockAssignmentHistory, history => history.galpon)
+  @OneToMany(() => FlockAssignmentHistory, (history) => history.galpon)
   asignacion_historial!: FlockAssignmentHistory[];
-
 }

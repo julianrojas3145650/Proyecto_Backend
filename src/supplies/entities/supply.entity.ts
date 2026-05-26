@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { SupplyCategory } from '../../supply-categories/entities/supply-category.entity';
 import { MeasurementUnit } from '../../measurement-units/entities/measurement-unit.entity';
 import { CallUser } from '../../users/entities/call-user.entity';
@@ -27,7 +34,7 @@ export class Supply {
   @ManyToOne(() => CallUser, (lu) => lu.insumos)
   @JoinColumn({ name: 'id_llamar_usuario' })
   llamarUsuario!: CallUser;
-  
+
   @Column()
   id_llamar_usuario!: number;
 

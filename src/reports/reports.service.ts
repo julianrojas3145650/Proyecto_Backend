@@ -7,7 +7,6 @@ import { CreateReportDto } from './dto/create-report.dto';
 
 @Injectable()
 export class ReportsService {
-
   private readonly logger = new Logger(ReportsService.name);
 
   constructor(
@@ -16,10 +15,9 @@ export class ReportsService {
   ) {}
 
   async create(dto: CreateReportDto) {
-
     const report = this.reportRepo.create({
       tipo_reporte: dto.tipo_reporte,
-      usuario: { id_usuario: dto.id_usuario } // 🔥 relación
+      usuario: { id_usuario: dto.id_usuario }, // 🔥 relación
     });
 
     const saved = await this.reportRepo.save(report);
@@ -28,24 +26,22 @@ export class ReportsService {
 
     return {
       message: 'Reporte creado correctamente',
-      data: saved
+      data: saved,
     };
   }
 
   async findAll() {
-
     const data = await this.reportRepo.find({
       relations: ['usuario'],
     });
 
     return {
       message: 'Lista de reportes obtenida',
-      data
+      data,
     };
   }
 
   async findOne(id_reporte: string) {
-
     const report = await this.reportRepo.findOne({
       where: { id_reporte },
       relations: ['usuario'],
@@ -57,7 +53,7 @@ export class ReportsService {
 
     return {
       message: 'Reporte encontrado',
-      data: report
+      data: report,
     };
   }
 }
