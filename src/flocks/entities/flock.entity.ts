@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, DeleteDateColumn } from 'typeorm';
 import { Breed } from '../../breeds/entities/breed.entity';
 import { FlockLocation } from './flock-location.entity';
 import { FlockStatus } from './flock-status.entity';
@@ -25,6 +25,9 @@ export class Flock {
 
     @Column()
     estado!: string;
+
+    @DeleteDateColumn({ name: 'fecha_eliminacion', type: 'timestamp', nullable: true })
+    fecha_eliminacion?: Date;
 
     @ManyToOne(() => Breed)
     @JoinColumn({ name: 'id_raza' })

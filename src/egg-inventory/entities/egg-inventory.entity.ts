@@ -1,5 +1,5 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, DeleteDateColumn } from 'typeorm';
 import { Flock } from '../../flocks/entities/flock.entity';
 import { EggProduction } from './egg-production.entity';
 import { DamagedEgg } from './damaged-egg.entity';
@@ -24,6 +24,9 @@ export class EggInventory {
 
   @Column()
   cantidad!: number;
+
+  @DeleteDateColumn({ name: 'fecha_eliminacion', type: 'timestamp', nullable: true })
+  fecha_eliminacion?: Date;
 
   @OneToMany(() => DamagedEgg, damaged => damaged.inventario)
   damagedEggs!: DamagedEgg[];

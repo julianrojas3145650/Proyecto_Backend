@@ -11,11 +11,11 @@ export class FlockAssignmentHistory {
   @Column()
   cantidad_asignada!: number;
 
-  @ManyToOne(() => Flock, flock => flock.ubicacion)
+  @ManyToOne(() => Flock)
   @JoinColumn({ name: 'id_lote' })
   lote!: Flock;
 
-  @ManyToOne(() => Barn, barn => barn.ubicacion_lote)
+  @ManyToOne(() => Barn, barn => barn.asignacion_historial)
   @JoinColumn({ name: 'id_galpon' })
   galpon!: Barn;
 

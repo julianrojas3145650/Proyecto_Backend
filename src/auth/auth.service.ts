@@ -31,21 +31,13 @@ export class AuthService {
       throw new UnauthorizedException('Usuario inactivo. Contacte al administrador');
     }
 
-    // 3. Comparación de contraseñas con LOG DE EMERGENCIA
-    /** const passwordMatch = await bcrypt.compare(dto.password, usuario.password);
-
-    !const hashDePrueba = await bcrypt.hash("Password123", 10);
-    this.logger.debug(`PARA LA BD USA ESTE: ${hashDePrueba}`);
-
-    this.logger.debug('--- DEBUG DE EMERGENCIA ---');
-    this.logger.debug(`Password enviado en Postman: ${dto.password}`);
-    this.logger.debug(`Hash leído de la BD: [${usuario.password}]`); 
-    this.logger.debug(`¿Coinciden según bcrypt?: ${passwordMatch}`);
+    // 3. Comparar contraseña
+    const passwordMatch = await bcrypt.compare(dto.password, usuario.password);
 
     if (!passwordMatch) {
       this.logger.error('La contraseña no coincide');
       throw new UnauthorizedException('Credenciales inválidas');
-    } */
+    }
 
     // 4. Actualizar último acceso
     try {

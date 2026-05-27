@@ -2,10 +2,12 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { paginate, Pagination } from 'nestjs-typeorm-paginate';
 import { User } from './entities/user.entity';
 import { CallUser } from './entities/call-user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class UsersService {
@@ -47,11 +49,19 @@ export class UsersService {
     return result;
   }
 
-  async findAll(): Promise<Omit<User, 'password'>[]> {
-    const usuarios = await this.usuarioRepo.find({
+  async findAll(paginationDto: PaginationDto): Promise<Pagination<Omit<User, 'password'>>> {
+    const { page = 1, limit = 10 } = paginationDto;
+    const paginatedResult = await paginate<User>(this.usuarioRepo, { page, limit }, {
       relations: ['usuarioRoles', 'usuarioRoles.rol'],
     });
-    return usuarios.map(({ password, ...u }) => u);
+
+    // Remover contraseñas del resultado paginado
+    const itemsWithoutPassword = paginatedResult.items.map(({ password, ...u }) => u);
+    
+    return {
+      ...paginatedResult,
+      items: itemsWithoutPassword as any,
+    };
   }
 
   async findOne(id: string): Promise<Omit<User, 'password'>> {
@@ -102,7 +112,7 @@ export class UsersService {
       where: { id_usuario: id },
     });
     if (!usuario) throw new NotFoundException(`Usuario ${id} no encontrado`);
-    await this.usuarioRepo.remove(usuario);
+    await this.usuarioRepo.softRemove(usuario);
     return { message: `Usuario ${id} eliminado correctamente` };
   }
 

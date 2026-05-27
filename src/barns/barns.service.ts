@@ -45,7 +45,7 @@ export class BarnsService {
 
     const barn = await this.barnRepository.findOne({
       where: { id_galpon },
-      relations: ['flockLocations', 'assignmentHistory']
+      relations: ['ubicacion_lote', 'asignacion_historial']
     });
 
     if (!barn) {

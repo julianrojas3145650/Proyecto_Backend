@@ -11,7 +11,7 @@ export class CreateBarnDto {
   nombre!: string;
 
   @IsNumber()
-  capacidadMaxAves!: number;
+  capacidad_max_aves!: number;
 
   @IsNumber()
   longitud!: number;
