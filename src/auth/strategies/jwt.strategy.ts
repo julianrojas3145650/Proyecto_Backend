@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../../users/users.service';
+import { User } from '../../users/entities/user.entity';
 
 export interface JwtPayload {
   sub: string; // id_usuario (UUID)
@@ -26,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload) {
+  async validate(payload: JwtPayload): Promise<Omit<User, 'password'> & { roles: string[] }> {
     const user = await this.usersService.findOne(payload.sub);
     if (!user || !user.activo) {
       throw new UnauthorizedException('Usuario inactivo o no encontrado');

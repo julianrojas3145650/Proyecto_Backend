@@ -1,9 +1,11 @@
 import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtPayload } from './strategies/jwt.strategy';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -12,28 +14,29 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
-  async login(dto: LoginDto): Promise<{ access_token: string; usuario: any }> {
-    this.logger.log(`Intentando login para el correo: ${dto.email}`);
+  async login(dto: LoginDto): Promise<{ access_token: string; usuario: Omit<User, 'password'> & { roles: string[] } }> {
+    this.logger.log(`Intentando login para el documento: ${dto.documento}`);
 
     // 1. Buscar el usuario
-    const usuario = await this.usersService.findByEmail(dto.email);
+    const usuario = await this.usersService.findByDocumento(dto.documento);
 
     if (!usuario) {
-      this.logger.error(`Usuario no encontrado: ${dto.email}`);
+      this.logger.error(`Usuario no encontrado con documento: ${dto.documento}`);
       throw new UnauthorizedException('Credenciales inválidas');
     }
 
     // 2. Verificar si está activo
     if (!usuario.activo) {
-      this.logger.warn(`Intento de entrada con usuario inactivo: ${dto.email}`);
+      this.logger.warn(`Intento de entrada con usuario inactivo (documento: ${dto.documento})`);
       throw new UnauthorizedException(
         'Usuario inactivo. Contacte al administrador',
       );
     }
 
-    // 3. Comparación de contraseñas
+    // 3. Comparar contraseña
     const passwordMatch = await bcrypt.compare(dto.password, usuario.password);
 
     if (!passwordMatch) {
@@ -44,14 +47,15 @@ export class AuthService {
     // 4. Actualizar último acceso
     try {
       await this.usersService.updateUltimoAcceso(usuario.id_usuario);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
       this.logger.error(
-        `Error al actualizar último acceso: ${error?.message || error}`,
+        `Error al actualizar último acceso: ${message}`,
       );
     }
 
     // 5. Mapear roles
-    const roles = usuario.usuarioRoles?.map((ur: any) => ur.rol?.nombre) || [];
+    const roles = usuario.usuarioRoles?.map((ur) => ur.rol?.nombre).filter((r): r is string => typeof r === 'string') || [];
 
     // 6. Generar Payload y Token
     const payload: JwtPayload = {
@@ -62,7 +66,7 @@ export class AuthService {
 
     const { password, ...usuarioSinPassword } = usuario;
 
-    this.logger.log(`Login exitoso: ${dto.email}`);
+    this.logger.log(`Login exitoso para documento: ${dto.documento}`);
 
     return {
       access_token: this.jwtService.sign(payload),
@@ -76,8 +80,9 @@ export class AuthService {
   async validateToken(token: string): Promise<JwtPayload> {
     try {
       return this.jwtService.verify<JwtPayload>(token);
-    } catch (error: any) {
-      this.logger.error(`Token inválido: ${error?.message || error}`);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Token inválido: ${message}`);
       throw new UnauthorizedException('Token inválido o expirado');
     }
   }

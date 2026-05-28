@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Query } from '@nestjs/common';
 
 import { FlocksService } from './flocks.service';
 import { CreateFlockDto } from './dto/create-flock.dto';
@@ -6,6 +6,7 @@ import { UpdateFlockDto } from './dto/update-flock.dto';
 import { RegisterDeadBirdsDto } from './dto/register-dead-birds.dto';
 import { FinishFlockDto } from './dto/finish-flock.dto';
 import { AssignFlockDto } from './dto/assign-flock.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Controller('flocks')
 export class FlocksController {
@@ -17,8 +18,8 @@ export class FlocksController {
   }
 
   @Get()
-  findAll() {
-    return this.flocksService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.flocksService.findAll(paginationDto);
   }
 
   @Get(':id')

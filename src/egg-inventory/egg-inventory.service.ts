@@ -1,11 +1,16 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { paginate, Pagination } from 'nestjs-typeorm-paginate';
+
 import { EggInventory } from './entities/egg-inventory.entity';
 import { EggProduction } from './entities/egg-production.entity';
 import { DamagedEgg } from './entities/damaged-egg.entity';
+import { EggHistory } from './entities/egg-history.entity';
+
 import { RegisterEggProductionDto } from './dto/register-egg-production.dto';
 import { RegisterDamagedEggsDto } from './dto/register-damaged-eggs.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class EggInventoryService {
@@ -13,34 +18,37 @@ export class EggInventoryService {
 
   constructor(
     @InjectRepository(EggInventory)
-    private inventoryRepository: Repository<EggInventory>,
+    private readonly inventoryRepo: Repository<EggInventory>,
+
     @InjectRepository(EggProduction)
-    private productionRepository: Repository<EggProduction>,
+    private readonly productionRepo: Repository<EggProduction>,
+
     @InjectRepository(DamagedEgg)
-    private damagedRepository: Repository<DamagedEgg>,
+    private readonly damagedRepo: Repository<DamagedEgg>,
+
+    @InjectRepository(EggHistory)
+    private readonly historyRepo: Repository<EggHistory>,
   ) {}
 
   async registerProduction(dto: RegisterEggProductionDto) {
-    this.logger.log(`Producción registrada: ${JSON.stringify(dto)}`);
-
-    let inventory = await this.inventoryRepository.findOne({
+    let inventory = await this.inventoryRepo.findOne({
       where: {
         lote: { id_lote: dto.loteId },
         tipo_huevo: { id_tipo: dto.tipoHuevoId }
       }
     });
 
-    const production = this.productionRepository.create({
+    const production = this.productionRepo.create({
       lote: { id_lote: dto.loteId } as any,
       tipo_huevoId: dto.tipoHuevoId,
       cantidady: dto.cantidad,
     });
-    const savedProduction = await this.productionRepository.save(production);
+    const savedProduction = await this.productionRepo.save(production);
 
     if (inventory) {
       inventory.cantidad += dto.cantidad;
     } else {
-      inventory = this.inventoryRepository.create({
+      inventory = this.inventoryRepo.create({
         lote: { id_lote: dto.loteId } as any,
         tipo_huevo: { id_tipo: dto.tipoHuevoId } as any,
         cantidad: dto.cantidad,
@@ -48,7 +56,8 @@ export class EggInventoryService {
       });
     }
 
-    const savedInventory = await this.inventoryRepository.save(inventory);
+    const savedInventory = await this.inventoryRepo.save(inventory);
+    this.logger.log(`Producción registrada: ${savedProduction.id_produccion_huevo}`);
 
     return {
       message: 'Producción de huevos registrada correctamente',
@@ -57,9 +66,7 @@ export class EggInventoryService {
   }
 
   async registerDamaged(dto: RegisterDamagedEggsDto) {
-    this.logger.warn(`Huevos dañados registrados: ${JSON.stringify(dto)}`);
-
-    const inventory = await this.inventoryRepository.findOne({ where: { id_inventario_huevo: dto.inventarioId } });
+    const inventory = await this.inventoryRepo.findOne({ where: { id_inventario_huevo: dto.inventarioId } });
     
     if (!inventory) {
       throw new NotFoundException(`Inventario con ID ${dto.inventarioId} no encontrado`);
@@ -70,47 +77,49 @@ export class EggInventoryService {
     }
 
     inventory.cantidad -= dto.cantidad;
-    await this.inventoryRepository.save(inventory);
+    await this.inventoryRepo.save(inventory);
 
-    const damaged = this.damagedRepository.create({
+    const damaged = this.damagedRepo.create({
       inventario: inventory,
       cantidad: dto.cantidad,
       razon: dto.razon,
     });
-    await this.damagedRepository.save(damaged);
+    const savedDamaged = await this.damagedRepo.save(damaged);
+
+    this.logger.warn(`Huevos dañados registrados: ${dto.cantidad} unidades`);
 
     return {
       message: 'Huevos dañados registrados correctamente',
-      data: damaged,
+      data: savedDamaged,
     };
   }
 
-  async findAll() {
-    this.logger.log('Consultando inventario de huevos');
-    const inventories = await this.inventoryRepository.find({
-      relations: ['lote', 'tipo_huevo']
+  async findAll(paginationDto: PaginationDto) {
+    const { page = 1, limit = 10 } = paginationDto;
+
+    const paginatedResult = await paginate<EggInventory>(this.inventoryRepo, { page, limit }, {
+      relations: ['tipo_huevo', 'lote', 'produccion', 'damagedEggs'],
     });
 
     return {
       message: 'Inventario de huevos obtenido',
-      data: inventories,
+      data: paginatedResult,
     };
   }
 
   async findOne(id: string) {
-    this.logger.log(`Consultando inventario ID: ${id}`);
-    const inventory = await this.inventoryRepository.findOne({
+    const inv = await this.inventoryRepo.findOne({
       where: { id_inventario_huevo: id },
-      relations: ['lote', 'tipo_huevo']
+      relations: ['tipo_huevo', 'lote', 'produccion', 'damagedEggs', 'history'],
     });
 
-    if (!inventory) {
-      throw new NotFoundException(`Inventario con ID ${id} no encontrado`);
+    if (!inv) {
+      throw new NotFoundException(`Inventario ${id} no encontrado`);
     }
 
     return {
       message: `Inventario ${id} encontrado`,
-      data: inventory,
+      data: inv,
     };
   }
 }

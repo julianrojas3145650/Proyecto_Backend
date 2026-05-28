@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, DeleteDateColumn } from 'typeorm';
 import { CallUser } from './call-user.entity';
 import { UserRole } from '../../roles/entities/user-role.entity';
 
@@ -9,6 +9,9 @@ export class User {
 
   @Column({ length: 255 })
   nombre!: string;
+
+  @Column({ length: 255 })
+  apellido!: string;
 
   @Column({ length: 255 })
   documento!: string;
@@ -27,6 +30,9 @@ export class User {
 
   @Column({ default: true })
   activo!: boolean;
+
+  @DeleteDateColumn({ name: 'fecha_eliminacion', type: 'timestamp', nullable: true })
+  fecha_eliminacion?: Date;
 
   @OneToMany(() => CallUser, (llamar) => llamar.usuario)
   llamarUsuarios!: CallUser[];
